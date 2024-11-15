@@ -12,6 +12,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+
+			// comments added to  check merge
 			Parent root = FXMLLoader.load(getClass().getResource("something.fxml"));
 			Scene scene = new Scene(root,600,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
