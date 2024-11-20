@@ -11,6 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML
@@ -29,7 +36,8 @@ public class LoginController {
         } else {
             boolean isAuthenticated = authenticateUser(username, password);
             if (isAuthenticated) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Login Successful!");
+               
+                loadDashboard(event);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Invalid email or password.");
             }
@@ -37,7 +45,7 @@ public class LoginController {
     }
 
     private boolean authenticateUser(String email, String password) {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM user WHERE username = ? AND password = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -62,4 +70,40 @@ public class LoginController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+    
+    public void createAnAccount(ActionEvent event) throws IOException {
+        // Load the Login.fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SignUp.fxml"));
+        Parent SignUpPage = loader.load();
+
+        // Create a new scene with the Login page
+        Scene scene = new Scene(SignUpPage, 800, 500);
+
+        // Get the current stage (window) and set the new scene
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        
+        stage.show();
+    }
+    
+    private void loadDashboard(ActionEvent event) {
+        try {
+            // Load the Dashboard.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Dashboard.fxml"));
+            Parent dashboardRoot = loader.load();
+
+            // Get the current stage (window) from the event
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene to the stage
+            Scene scene = new Scene(dashboardRoot);
+            stage.setScene(scene);
+            stage.setTitle("Dashboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load the Dashboard.");
+        }
+    }
+
 }

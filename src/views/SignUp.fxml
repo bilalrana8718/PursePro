@@ -47,7 +47,8 @@
             <!-- Error message Label for password mismatch -->
             
 			<Button text="Sign Up" layoutX="80.0" layoutY="340.0"  mnemonicParsing="false" onAction="#handleSignUp" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;"  textFill="WHITE" />
-           
+           	<Button text="Go to Login" layoutX="80.0" layoutY="390.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #C73659; -fx-background-radius: 20px;" textFill="WHITE" />
+           	
             </children>
       </AnchorPane>
    </right>
