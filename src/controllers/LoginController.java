@@ -1,22 +1,21 @@
 package controllers;
 
-import db.DatabaseConnection;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import db.DatabaseConnection;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
+import models.SessionManager;
 
 public class LoginController {
 
@@ -36,7 +35,7 @@ public class LoginController {
         } else {
             boolean isAuthenticated = authenticateUser(username, password);
             if (isAuthenticated) {
-               
+            	
                 loadDashboard(event);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Invalid email or password.");
@@ -54,6 +53,16 @@ public class LoginController {
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("UserID");
+                String userName = resultSet.getString("UserName");
+
+                // Save user details in SessionManager
+                SessionManager.getInstance().setCurrentUserId(userId);
+                SessionManager.getInstance().setCurrentUserName(userName);
+                SessionManager.getInstance().setCurrentUserEmail(email);
+                return true;
+            }
             return resultSet.next(); 
 
         } catch (Exception e) {
@@ -96,7 +105,7 @@ public class LoginController {
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             // Set the new scene to the stage
-            Scene scene = new Scene(dashboardRoot);
+            Scene scene = new Scene(dashboardRoot, 800, 500);
             stage.setScene(scene);
             stage.setTitle("Dashboard");
             stage.show();

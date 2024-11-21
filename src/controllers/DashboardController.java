@@ -1,18 +1,19 @@
 package controllers;
 
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import application.AppUtils;
+import models.SessionManager;
 
 public class DashboardController {
     @FXML
@@ -29,12 +30,10 @@ public class DashboardController {
         );
     }
     
-    public void openSendMoney() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Send Money");
-        alert.setHeaderText(null);
-        alert.setContentText("Send Money functionality coming soon!");
-        alert.showAndWait();
+    public void openSendMoney(ActionEvent event) {
+    	
+        AppUtils.changeScene(event, "/views/SendMoney.fxml");
+        
     }
     public void openTransactions() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -60,31 +59,17 @@ public class DashboardController {
         alert.showAndWait();
     }
 
-    public void logout(ActionEvent event) {
-        try {
-            // Show a confirmation message
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Logout");
-            alert.setHeaderText(null);
-            alert.setContentText("You have been logged out.");
-            alert.showAndWait();
-
-            // Load the Login.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
-            Parent loginRoot = loader.load();
-
-            // Get the current stage (window) from the event
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            // Set the new scene to the stage
-            Scene scene = new Scene(loginRoot);
-            stage.setScene(scene);
-            stage.setTitle("Login Page");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            
-        }
+    public void logout(ActionEvent event) throws IOException {
+        // Show a confirmation message
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText(null);
+		alert.setContentText("You have been logged out.");
+		alert.showAndWait();
+		
+		SessionManager.getInstance().clearSession();
+         
+		AppUtils.changeScene(event, "/views/Login.fxml");
     }
 
 }
