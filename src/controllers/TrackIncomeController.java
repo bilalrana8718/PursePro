@@ -2,13 +2,12 @@ package controllers;
 
 import javafx.fxml.FXML;
 
+import models.SessionManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -27,8 +25,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import db.DatabaseConnection;
 
@@ -109,7 +105,8 @@ public class TrackIncomeController {
 
 
     private void populateTableWithData() {
-    	String query = "select * from Incomes";
+    	int UserID = SessionManager.getInstance().getCurrentUserId();
+    	String query = "select * from Incomes where UserID = "+UserID;
     		try (Connection connection = DatabaseConnection.getConnection()) {
     			Statement statement = connection.createStatement();
     			ResultSet resultSet = statement.executeQuery(query);
