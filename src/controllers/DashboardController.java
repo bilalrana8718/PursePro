@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 
@@ -85,6 +86,32 @@ public class DashboardController {
             e.printStackTrace();
             
         }
+    }
+    
+    public void trackIncome(ActionEvent event) {
+    	System.out.println("hhhh");
+    	try {
+            // Show a confirmation message
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Track Income");
+            alert.setHeaderText(null);
+
+            // Load the Login.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TrackIncome.fxml"));
+            Parent incomeRoot = loader.load();
+
+            // Get the current stage (window) from the event
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene to the stage
+            Scene scene = new Scene(incomeRoot);
+            stage.setScene(scene);
+            stage.setTitle("Track income");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+        }    	
     }
 
 }

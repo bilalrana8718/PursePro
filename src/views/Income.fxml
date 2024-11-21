@@ -3,31 +3,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IncomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IncomeController">
 
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="118.0" layoutY="294.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Add Income" textFill="WHITE" />
-            <Label layoutX="105.0" layoutY="329.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
-            <Label layoutX="71.0" layoutY="408.0" prefWidth="300.0" style="-fx-font-size: 14px;" text="Track your income easily and securely." textFill="WHITE" wrapText="true" />
-            <ImageView fitHeight="155.0" fitWidth="176.0" layoutX="105.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+            <Label layoutX="106.0" layoutY="252.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Add Income" textFill="WHITE" />
+            <Label layoutX="93.0" layoutY="287.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
+            <Label layoutX="59.0" layoutY="366.0" prefWidth="300.0" style="-fx-font-size: 14px;" text="Track your income easily and securely." textFill="WHITE" wrapText="true" />
+            <ImageView fitHeight="155.0" fitWidth="176.0" layoutX="93.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@PUR.png" />
                </image>
             </ImageView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToTrackIncome" style="-fx-background-color: #7b0101; -fx-background-radius: 30px; -fx-font-size: 20px; -fx-font-weight: bold;" text="&lt;" textFill="WHITE" />
          </children>
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #151515;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="591.0" prefWidth="397.0" style="-fx-background-color: #151515;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="80.0" layoutY="60.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Add New Income" textFill="#EEEEEE" />
             

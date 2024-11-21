@@ -21,7 +21,6 @@ public class Income {
 			source = s;
 			dateTime = d;
 			UserID = uID;
-			insertToDataBase();
 			
 		}
 		public Income(double a, String s, int uID){
@@ -29,9 +28,17 @@ public class Income {
 			source = s;
 			dateTime = LocalDateTime.now();
 			UserID = uID;		
-			insertToDataBase();
+			
 		}
-		private void insertToDataBase() {
+		public Income(int id, double a, String s,LocalDateTime d, int uID){
+			ID = id;
+			amount = a;
+			source = s;
+			dateTime = LocalDateTime.now();
+			UserID = uID;		
+			
+		}
+		public void insertToDataBase() {
 			String insertQuery = "INSERT INTO Incomes (Source, Amount, dateTime, UserID) VALUES (?, ?, ?, ?)";
 			
 			try (Connection connection = DatabaseConnection.getConnection();
@@ -71,4 +78,28 @@ public class Income {
 	        alert.setContentText(content);
 	        alert.showAndWait();
 	    }
+		public int getUserID() {
+			return UserID;
+		}
+		public void setUserID(int userID) {
+			UserID = userID;
+		}
+		public double getAmount() {
+			return amount;
+		}
+		public void setAmount(double amount) {
+			this.amount = amount;
+		}
+		public String getSource() {
+			return source;
+		}
+		public void setSource(String source) {
+			this.source = source;
+		}
+		public void setID(int iD) {
+			ID = iD;
+		}
+		public void setDateTime(LocalDateTime dateTime) {
+			this.dateTime = dateTime;
+		}
 	}
