@@ -28,13 +28,12 @@ CREATE TABLE Transactions (
 CREATE TABLE Budget (
     BudgetID INT AUTO_INCREMENT PRIMARY KEY,
     UserID INT NOT NULL,
-    Health DECIMAL(10, 2) DEFAULT 0.00,
-    Education DECIMAL(10, 2) DEFAULT 0.00,
-    Transport DECIMAL(10, 2) DEFAULT 0.00,
-    Entertainment DECIMAL(10, 2) DEFAULT 0.00,
+    Amount DECIMAL(10, 2) DEFAULT 0.00,
+    Category Varchar(100),
     DateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 
 CREATE TABLE FinancialHealthScore (
@@ -86,6 +85,16 @@ CREATE TABLE Subscriptions (
     Price DECIMAL(10, 2) NOT NULL,
     DurationInDays INT NOT NULL
 );
+
+CREATE table Incomes(
+    IncomeID INT AUTO_INCREMENT PRIMARY KEY,
+	Source varchar(100),
+    amount decimal(10,2),
+    dateTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UserID INT,
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+select * from Incomes
 
 
 
