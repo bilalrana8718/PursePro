@@ -1,10 +1,21 @@
 package controllers;
 
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import application.AppUtils;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
+import models.Expense;
 import models.FinancialHealthScore;
 
 public class FinancialHealthController {
@@ -14,6 +25,7 @@ public class FinancialHealthController {
 	@FXML Text suggestionsText;
 	
 	private FinancialHealthScore calculator = FinancialHealthScore.getInstance();
+
 	@FXML
 	private void calculateFinancialHealth(ActionEvent event){
 		calculator.calculateHealthScore();
@@ -28,6 +40,14 @@ public class FinancialHealthController {
     @FXML
     private void backToDashBoard(ActionEvent event){
         AppUtils.changeScene(event, "/views/Dashboard.fxml");
+    }
+    @FXML
+    private void backToFinancialCalculator(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/FinancialHealth.fxml");
+    }
+    @FXML
+    private void navegateToFinancialHistory(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/FinancialHealthHistory.fxml");
     }
 
 }

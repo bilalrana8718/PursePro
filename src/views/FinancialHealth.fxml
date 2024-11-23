@@ -13,8 +13,8 @@
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="118.0" layoutY="294.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Financial Health Score" textFill="WHITE" />
-            <Label layoutX="105.0" layoutY="329.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
+            <Label layoutX="61.0" layoutY="300.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Financial Health Score" textFill="WHITE" />
+            <Label layoutX="105.0" layoutY="342.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
             <Label layoutX="71.0" layoutY="408.0" prefWidth="300.0" style="-fx-font-size: 14px;" text="Get insights into your financial health and take control of your money." textFill="WHITE" wrapText="true" />
             <ImageView fitHeight="155.0" fitWidth="176.0" layoutX="105.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -48,7 +48,9 @@
             <Text fx:id="suggestionsText" fill="#ffa6a6" layoutX="81.0" layoutY="270.0" style="-fx-font-size: 13px;" text="" wrappingWidth="290.0" />
 
             <!-- Calculate Button -->
-            <Button fx:id="calculateButton" layoutX="80.0" layoutY="439.0" mnemonicParsing="false" onAction="#calculateFinancialHealth" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Calculate" textFill="WHITE" />
+            <Button fx:id="calculateButton" layoutX="54.0" layoutY="439.0" mnemonicParsing="false" onAction="#calculateFinancialHealth" prefHeight="39.0" prefWidth="116.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Calculate" textFill="WHITE" />
+
+            <Button fx:id="viewButton" layoutX="213.0" layoutY="439.0" mnemonicParsing="false" onAction="#navegateToFinancialHistory" prefHeight="40.0" prefWidth="147.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="view previous scores" textFill="WHITE" />
 
          </children>
       </AnchorPane>

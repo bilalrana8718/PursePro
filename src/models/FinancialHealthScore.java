@@ -2,10 +2,14 @@ package models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import db.DatabaseConnection;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 public class FinancialHealthScore {
@@ -16,9 +20,17 @@ public class FinancialHealthScore {
 	private IncomeManager incomeManager = IncomeManager.getInstance();
 	private ExpenseManager expenseManager = ExpenseManager.getInstance();
 	private String suggestion = "";
-	
+	private LocalDateTime dateTime;
 	
 	private FinancialHealthScore() {}
+	
+	private FinancialHealthScore(double incToExp, double savPot, double sc, LocalDateTime d) {
+		incomeToExpenseRatio = incToExp;
+		savingPotential = savPot;
+		score = sc;
+		dateTime = d;
+	}
+	
 	
 	public static FinancialHealthScore getInstance() {
 		if(instance == null) {
@@ -79,7 +91,9 @@ public class FinancialHealthScore {
 	public void setScore(double score) {
 		this.score = score;
 	}
-
+	public LocalDateTime getDate() {
+		return dateTime;
+	}
 	public double getIncomeToExpenseRatio() {
 		return incomeToExpenseRatio;
 	}
@@ -165,5 +179,31 @@ public class FinancialHealthScore {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+	
+    public ObservableList<FinancialHealthScore> getScoreList(ObservableList<FinancialHealthScore> scoreList) {
+    	scoreList.clear();
+    	int UserID = SessionManager.getInstance().getCurrentUserId();
+    	String query = "select * from FinancialHealthScore where UserID = "+UserID + " ORDER BY Date DESC";
+    		try (Connection connection = DatabaseConnection.getConnection()) {
+    			Statement statement = connection.createStatement();
+    			ResultSet resultSet = statement.executeQuery(query);
+    			
+            // Iterate through the ResultSet and add Income objects to the ObservableList
+            	while (resultSet.next()) {
+            		int id = resultSet.getInt("ScoreID");
+            		double incToExp = resultSet.getDouble("IncomeToExpenseRatio");
+            		double savPot = resultSet.getDouble("SavingsPotentialPercentage");
+            		double sc = resultSet.getDouble("OverallScore");
+            		LocalDateTime date = resultSet.getTimestamp("Date").toLocalDateTime();
+
+            		// Add the Income object to the ObservableList
+            		scoreList.add(new FinancialHealthScore(incToExp, savPot, sc, date));
+            	}
+    		}
+    	catch (SQLException e) {
+            e.printStackTrace();
+        }
+    	return scoreList;
     }
 }
