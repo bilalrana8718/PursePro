@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import models.PaymentRequest;
 import models.SessionManager;
 
@@ -116,62 +117,89 @@ public class PaymentRequestsController {
 
     private void processPayment(PaymentRequest selectedRequest) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            // 1. Deduct amount from current user's account balance
-            String deductQuery = "UPDATE User SET AccountBalance = AccountBalance - ? WHERE UserID = ?";
-            PreparedStatement deductStmt = connection.prepareStatement(deductQuery);
-            deductStmt.setDouble(1, selectedRequest.getAmount());
-            deductStmt.setInt(2, SessionManager.getInstance().getCurrentUserId());
-            deductStmt.executeUpdate();
-            
+            // Check if the recipient (Sender of the request) exists and fetch their UserID
             String findUserIdQuery = "SELECT UserID FROM User WHERE UserName = ?";
             PreparedStatement findUserIdStmt = connection.prepareStatement(findUserIdQuery);
             findUserIdStmt.setString(1, selectedRequest.getSenderName());
             ResultSet resultSet = findUserIdStmt.executeQuery();
+
             int recipientUserId = 0;
             if (resultSet.next()) {
                 recipientUserId = resultSet.getInt("UserID");
-                // Use recipientUserId as needed
             } else {
-                System.out.println("User not found for username: " + selectedRequest.getRecipientName());
+                showAlert(Alert.AlertType.ERROR, "Invalid Recipient", "The sender of the payment request does not exist.");
+                return;
             }
 
-            
-            // 2. Add amount to recipient's account balance
-            String addQuery = "UPDATE User SET AccountBalance = AccountBalance + ? WHERE UserID = ?";
-            PreparedStatement addStmt = connection.prepareStatement(addQuery);
-            addStmt.setDouble(1, selectedRequest.getAmount());
-            addStmt.setInt(2, recipientUserId);
-            addStmt.executeUpdate();
+            // Check the current user's balance
+            String checkBalanceQuery = "SELECT AccountBalance FROM User WHERE UserID = ?";
+            PreparedStatement checkBalanceStmt = connection.prepareStatement(checkBalanceQuery);
+            checkBalanceStmt.setInt(1, SessionManager.getInstance().getCurrentUserId());
+            ResultSet balanceResult = checkBalanceStmt.executeQuery();
 
-            // 3. Update payment request status to 'Completed'
-            String updateRequestQuery = "UPDATE PaymentRequest SET Status = 'Completed' WHERE RequestID = ?";
-            PreparedStatement updateRequestStmt = connection.prepareStatement(updateRequestQuery);
-            updateRequestStmt.setInt(1, selectedRequest.getRequestId());
-            updateRequestStmt.executeUpdate();
+            if (balanceResult.next()) {
+                double senderBalance = balanceResult.getDouble("AccountBalance");
 
-            // 4. Record the transaction in the Transactions table
-            String recordTransactionQuery = "INSERT INTO Transactions (Amount, Category, Description, UserID, RecipientID) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement recordTransactionStmt = connection.prepareStatement(recordTransactionQuery);
-            recordTransactionStmt.setDouble(1, selectedRequest.getAmount());
-            recordTransactionStmt.setString(2, "Payment Request");
-            recordTransactionStmt.setString(3, "Payment for request ID: " + selectedRequest.getRequestId());
-            recordTransactionStmt.setInt(4, SessionManager.getInstance().getCurrentUserId());
-            recordTransactionStmt.setInt(5, recipientUserId);
-            recordTransactionStmt.executeUpdate();
+                // Validate if the user has enough balance
+                if (senderBalance < selectedRequest.getAmount()) {
+                    showAlert(Alert.AlertType.ERROR, "Insufficient Funds", "You do not have enough balance to process this payment.");
+                    return;
+                }
 
-            // Show success alert
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Payment completed successfully.");
-            successAlert.showAndWait();
+                // Deduct amount from the current user's balance
+                String deductQuery = "UPDATE User SET AccountBalance = AccountBalance - ? WHERE UserID = ?";
+                PreparedStatement deductStmt = connection.prepareStatement(deductQuery);
+                deductStmt.setDouble(1, selectedRequest.getAmount());
+                deductStmt.setInt(2, SessionManager.getInstance().getCurrentUserId());
+                deductStmt.executeUpdate();
 
-            // Refresh the payment requests table
-            loadPaymentRequests();
+                // Add amount to the recipient's balance
+                String addQuery = "UPDATE User SET AccountBalance = AccountBalance + ? WHERE UserID = ?";
+                PreparedStatement addStmt = connection.prepareStatement(addQuery);
+                addStmt.setDouble(1, selectedRequest.getAmount());
+                addStmt.setInt(2, recipientUserId);
+                addStmt.executeUpdate();
 
+                // Update the payment request status to 'Completed'
+                String updateRequestQuery = "UPDATE PaymentRequest SET Status = 'Completed' WHERE RequestID = ?";
+                PreparedStatement updateRequestStmt = connection.prepareStatement(updateRequestQuery);
+                updateRequestStmt.setInt(1, selectedRequest.getRequestId());
+                updateRequestStmt.executeUpdate();
+
+                // Record the transaction
+                String recordTransactionQuery = "INSERT INTO Transactions (Amount, Category, Description, UserID, RecipientID) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement recordTransactionStmt = connection.prepareStatement(recordTransactionQuery);
+                recordTransactionStmt.setDouble(1, selectedRequest.getAmount());
+                recordTransactionStmt.setString(2, "Payment Request");
+                recordTransactionStmt.setString(3, "Payment for request ID: " + selectedRequest.getRequestId());
+                recordTransactionStmt.setInt(4, SessionManager.getInstance().getCurrentUserId());
+                recordTransactionStmt.setInt(5, recipientUserId);
+                recordTransactionStmt.executeUpdate();
+
+                // Show success alert
+                showAlert(Alert.AlertType.INFORMATION, "Payment Success", "The payment was completed successfully.");
+
+                // Refresh the payment requests table
+                loadPaymentRequests();
+
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Unable to retrieve your account balance.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "An error occurred while processing the payment: " + e.getMessage());
-            errorAlert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Payment Error", "An error occurred while processing the payment: " + e.getMessage());
         }
     }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null); // Optional: You can add a header here if needed
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
 
     
     

@@ -56,20 +56,29 @@ public class SendMoneyController {
 
     @FXML
     public void sendMoney(ActionEvent event) {
-        String recipientEmail = recipientAccountField.getText();
+        String recipientEmail = recipientAccountField.getText().trim();
         String category = categoryField.getValue();
-        String description = descriptionField.getText();
+        String description = descriptionField.getText().trim();
 
         if (recipientEmail.isEmpty() || amountField.getText().isEmpty() || category == null) {
             showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill in all required fields.");
             return;
         }
 
+        double amount;
         try {
-            double amount = Double.parseDouble(amountField.getText());
+            amount = Double.parseDouble(amountField.getText());
+            if (amount <= 0) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Amount", "The amount must be greater than zero.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter a valid numeric amount.");
+            return;
+        }
 
-            // Check if recipient exists
-            Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            // Check if recipient exists and get their ID
             PreparedStatement checkRecipient = connection.prepareStatement("SELECT UserID FROM User WHERE Username = ?");
             checkRecipient.setString(1, recipientEmail);
             ResultSet recipientResult = checkRecipient.executeQuery();
@@ -81,6 +90,12 @@ public class SendMoneyController {
 
             int recipientID = recipientResult.getInt("UserID");
 
+            // Check if the recipient is the current user
+            if (recipientID == getCurrentUserID()) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Transaction", "You cannot send money to yourself.");
+                return;
+            }
+
             // Check sender's balance
             PreparedStatement checkBalance = connection.prepareStatement("SELECT AccountBalance FROM User WHERE UserID = ?");
             checkBalance.setInt(1, getCurrentUserID());
@@ -88,37 +103,47 @@ public class SendMoneyController {
 
             if (balanceResult.next()) {
                 double senderBalance = balanceResult.getDouble("AccountBalance");
-                if (senderBalance < totalAmount) {
+
+                // Check if the sender has enough balance
+                if (senderBalance < amount) {
                     showAlert(Alert.AlertType.ERROR, "Insufficient Funds", "You do not have enough balance for this transaction.");
                     return;
                 }
-                
-                //add expense
-                new Expense(amount, category).insertToDataBase();
-                
-                // Deduct amount from sender
+
+                // Deduct amount from sender's account
                 PreparedStatement deductAmount = connection.prepareStatement("UPDATE User SET AccountBalance = AccountBalance - ? WHERE UserID = ?");
-                deductAmount.setDouble(1, totalAmount);
+                deductAmount.setDouble(1, amount);
                 deductAmount.setInt(2, getCurrentUserID());
                 deductAmount.executeUpdate();
 
-                // Add amount to recipient
+                // Add amount to recipient's account
                 PreparedStatement addAmount = connection.prepareStatement("UPDATE User SET AccountBalance = AccountBalance + ? WHERE UserID = ?");
                 addAmount.setDouble(1, amount);
                 addAmount.setInt(2, recipientID);
                 addAmount.executeUpdate();
-                
-                Transaction tran = new Transaction(amount, category, description, getCurrentUserID(), recipientID);
-                tran.addTransaction();
 
+                // Record transaction
+                Transaction transaction = new Transaction(amount, category, description, getCurrentUserID(), recipientID);
+                transaction.addTransaction();
+
+                // Add expense
+                new Expense(amount, category).insertToDataBase();
+
+                // Show success alert
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Money sent successfully!");
+
+                // Clear input fields
+                recipientAccountField.clear();
+                amountField.clear();
+                descriptionField.clear();
+                categoryField.setValue(null);
             }
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while processing the transaction.");
         }
     }
-    
+
     @FXML
     public void goBack(ActionEvent event) {
         AppUtils.changeScene(event, "/views/Dashboard.fxml");
