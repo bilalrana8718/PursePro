@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SubscriptionController">
+    <AnchorPane style="-fx-background-color: #1E1E2C;" prefHeight="600.0" prefWidth="800.0">
+        <Label text="My Subscriptions" layoutX="20.0" layoutY="20.0"
+               style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+        
+        <TextField fx:id="searchField" layoutX="20.0" layoutY="60.0" prefWidth="300.0" promptText="Search subscriptions"
+                   style="-fx-background-color: #FFFFFF; -fx-border-color: #A91D3A;" />
+        <Button text="Search" onAction="#onSearch" layoutX="330.0" layoutY="60.0"
+                style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" textFill="WHITE" />
+
+        <TableView fx:id="subscriptionTable" layoutX="20.0" layoutY="110.0" prefWidth="700.0" prefHeight="300.0">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="140.0" />
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="340.0" />
+                <TableColumn fx:id="priceColumn" text="Price" prefWidth="100.0" />
+                <TableColumn fx:id="durationColumn" text="Duration" prefWidth="100.0" />
+            </columns>
+        </TableView>
+
+        <HBox layoutX="20.0" layoutY="430.0" spacing="20.0">
+            <Button text="Add Subscription" onAction="#onAddSubscription"
+                    style="-fx-background-color: #4CAF50; -fx-background-radius: 20px;" textFill="WHITE" />
+            <Button text="Cancel Subscription" onAction="#onCancelSubscription"
+                    style="-fx-background-color: #F44336; -fx-background-radius: 20px;" textFill="WHITE" />
+            <Button text="Back" onAction="#onBack"
+                    style="-fx-background-color: #2196F3; -fx-background-radius: 20px;" textFill="WHITE" />
+        </HBox>
+    </AnchorPane>
+</AnchorPane>

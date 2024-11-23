@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionHistoryController">
+    <top>
+        <Label text="Transaction History" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 20;" alignment="CENTER" />
+        <Button layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #7b0101; -fx-background-radius: 30px; -fx-font-size: 20px; -fx-font-weight: bold;" text="&lt;" textFill="WHITE" />
+    </top>
+
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20;">
+            <HBox spacing="10">
+                <DatePicker fx:id="startDatePicker" promptText="Start Date" />
+                <DatePicker fx:id="endDatePicker" promptText="End Date" />
+                <Button text="Filter" onAction="#filterTransactions" style="-fx-background-color: #A91D3A; -fx-text-fill: white; -fx-font-weight: bold;" />
+                <Button text="Export to CSV" onAction="#exportToCSV" style="-fx-background-color: #151515; -fx-text-fill: #EEEEEE; -fx-font-weight: bold;" />
+            </HBox>
+            <TableView fx:id="transactionTable" style="-fx-padding: 10;">
+                <columns>
+                    <TableColumn text="Date" fx:id="dateColumn" />
+                    <TableColumn text="Recipient" fx:id="recipientColumn" />
+                    <TableColumn text="Amount" fx:id="amountColumn" />
+                    <TableColumn text="Category" fx:id="categoryColumn" />
+                    <TableColumn text="Description" fx:id="descriptionColumn" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <Label fx:id="statusLabel" text="" style="-fx-padding: 10;" />
+    </bottom>
+</BorderPane>

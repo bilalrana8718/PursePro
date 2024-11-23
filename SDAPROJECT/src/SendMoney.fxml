@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SendMoneyController">
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="106.0" layoutY="252.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Send Money" textFill="WHITE" />
+                <Label layoutX="93.0" layoutY="287.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
+                <Label layoutX="59.0" layoutY="366.0" prefWidth="300.0" style="-fx-font-size: 14px;" text="Send and manage your transactions securely." textFill="WHITE" wrapText="true" />
+                <ImageView fitHeight="155.0" fitWidth="176.0" layoutX="93.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@PUR.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER" style="-fx-background-color: #151515;">
+            <children>
+                <Label layoutX="80.0" layoutY="60.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Send Money" textFill="#EEEEEE" />
+
+                <TextField fx:id="recipientAccountField" layoutX="80.0" layoutY="140.0" prefWidth="240.0" promptText="Recipient's Username" style="-fx-text-fill: #FFFFFF; -fx-background-color: transparent; -fx-border-color: #A91D3A; -fx-border-width: 0px 0px 2px 0px;" />
+                <TextField fx:id="amountField" layoutX="80.0" layoutY="180.0" prefWidth="240.0" promptText="Amount" style="-fx-text-fill: #FFFFFF; -fx-background-color: transparent; -fx-border-color: #A91D3A; -fx-border-width: 0px 0px 2px 0px;" />
+                <TextField fx:id="descriptionField" layoutX="80.0" layoutY="220.0" prefWidth="240.0" promptText="Description" style="-fx-text-fill: #FFFFFF; -fx-background-color: transparent; -fx-border-color: #A91D3A; -fx-border-width: 0px 0px 2px 0px;" />
+                <ComboBox fx:id="categoryField" layoutX="80.0" layoutY="260.0" prefWidth="240.0" promptText="Select Category" style="-fx-text-fill: #FFFFFF; -fx-background-color: transparent; -fx-border-color: #A91D3A; -fx-border-width: 0px 0px 2px 0px;" />
+
+                <Button layoutX="80.0" layoutY="320.0" mnemonicParsing="false" onAction="#calculateTotal" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #C73659; -fx-background-radius: 20px;" text="Calculate Total (with Fees)" textFill="WHITE" />
+                <Label fx:id="totalLabel" layoutX="80.0" layoutY="370.0" prefWidth="240.0" style="-fx-font-size: 16px; -fx-text-fill: #EEEEEE;" text="Total Amount: $0.00" />
+                <Button layoutX="80.0" layoutY="400.0" mnemonicParsing="false" onAction="#sendMoney" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Send Money" textFill="WHITE" />
+                <Button layoutX="80.0" layoutY="450.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #151515; -fx-background-radius: 20px;" text="Back" textFill="#EEEEEE" />
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>
