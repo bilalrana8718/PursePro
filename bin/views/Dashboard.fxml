@@ -29,6 +29,7 @@
       </AnchorPane>
    </left>
 
+
    <!-- Right Content Area -->
    <center>
       <AnchorPane style="-fx-background-color: #F8F8F8;" BorderPane.alignment="CENTER">
@@ -42,7 +43,7 @@
             </AnchorPane>
             
             <VBox layoutX="20.0" layoutY="140.0" spacing="15.0" prefWidth="550.0">
-               
+               <Button onAction="#FinancialHealth" style="-fx-background-color: #A91D3A; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" text="Financial Health" />
                <Button text="Track Income" onAction="#trackIncome" prefWidth="550.0" style="-fx-background-color: #A91D3A; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
                <Button text="Track Expense" onAction="#trackExpense" prefWidth="550.0" style="-fx-background-color: #0078D7; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
             </VBox>
