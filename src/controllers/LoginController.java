@@ -61,6 +61,7 @@ public class LoginController {
                 SessionManager.getInstance().setCurrentUserId(userId);
                 SessionManager.getInstance().setCurrentUserName(userName);
                 SessionManager.getInstance().setCurrentUserEmail(email);
+                SessionManager.getInstance().setCurrentUserBalance(resultSet.getDouble("AccountBalance"));
                 return true;
             }
             return resultSet.next(); 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.NewRequestController">
+   <left>
+      <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="118.0" layoutY="294.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Welcome to" textFill="WHITE" />
+            <Label layoutX="105.0" layoutY="329.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
+            <Label layoutX="71.0" layoutY="408.0" prefWidth="300.0" style="-fx-font-size: 14px;" text="Securely create payment requests with ease." textFill="WHITE" wrapText="true" />
+            <ImageView fitHeight="155.0" fitWidth="176.0" layoutX="105.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@PUR.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER" style="-fx-background-color: #151515;">
+         <children>
+            <Label layoutX="80.0" layoutY="60.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Create a Payment Request" textFill="#EEEEEE" />
+            
+            <TextField fx:id="recipientEmailField" layoutX="80.0" layoutY="140.0" prefWidth="240.0" promptText="Recipient's Username" 
+                       style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #EEEEEE;" />
+            
+            <TextField fx:id="amountField" layoutX="80.0" layoutY="200.0" prefWidth="240.0" promptText="Amount" 
+                       style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #EEEEEE;" />
+            
+            <TextArea fx:id="descriptionField" layoutX="80.0" layoutY="260.0" prefWidth="240.0" prefHeight="80.0" promptText="Description (Optional)" wrapText="true"
+                      style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #EEEEEE;" />
+            
+            <Button text="Submit Request" layoutX="80.0" layoutY="360.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="40.0" prefWidth="240.0" 
+                    style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" textFill="WHITE" />
+            
+            <Button text="Cancel" layoutX="80.0" layoutY="420.0" mnemonicParsing="false" onAction="#cancel" prefHeight="40.0" prefWidth="240.0" 
+                    style="-fx-background-color: #151515; -fx-background-radius: 20px;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

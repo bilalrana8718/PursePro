@@ -9,6 +9,7 @@ public class SessionManager {
     private int currentUserId;
     private String currentUserName;
     private String currentUserEmail;
+    private double currentUserBalance;
 
 
     // Private constructor to prevent instantiation
@@ -47,11 +48,20 @@ public class SessionManager {
     public void setCurrentUserEmail(String currentUserEmail) {
         this.currentUserEmail = currentUserEmail;
     }
+    
+    public double getCurrentUserBalance() {
+        return currentUserBalance;
+    }
+
+    public void setCurrentUserBalance(double currentUserBalance) {
+        this.currentUserBalance = currentUserBalance;
+    }
 
     // Clear session data
     public void clearSession() {
         currentUserId = 0;
         currentUserName = null;
         currentUserEmail = null;
+        currentUserBalance = 0;
     }
 }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackIncomeController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackExpenseController">
     <left>
         <AnchorPane prefHeight="600.0" prefWidth="177.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="21.0" layoutY="291.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Income Overview" textFill="WHITE" />
+                <Label layoutX="21.0" layoutY="291.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Expense Overview" textFill="WHITE" />
                 <Label layoutX="38.0" layoutY="326.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
                 <Label layoutX="21.0" layoutY="409.0" prefHeight="58.0" prefWidth="211.0" style="-fx-font-size: 14px;" text="Your trusted partner for secure financial transactions." textFill="WHITE" wrapText="true" />
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToDashBoard" style="-fx-background-color: #7b0101; -fx-background-radius: 30px; -fx-font-size: 20px; -fx-font-weight: bold;" text="&lt;" textFill="WHITE" />
@@ -24,22 +24,21 @@
     <right>
         <AnchorPane prefHeight="600.0" prefWidth="630.0" style="-fx-background-color: #151515;" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="totalIncomeLabel" layoutX="168.0" layoutY="14.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Total Income in Last 30 Days: $" textFill="#EEEEEE" />
+                <Label fx:id="totalExpenseLabel" layoutX="168.0" layoutY="14.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Total Expenses: $" textFill="#EEEEEE" />
 
-                <TableView fx:id="incomesTable" layoutX="23.0" layoutY="118.0" prefHeight="300.0" prefWidth="530.0">
+                <TableView fx:id="expenseTable" layoutX="23.0" layoutY="118.0" prefHeight="300.0" prefWidth="530.0">
                     <columns>
-                        <TableColumn fx:id="sourceColumn" prefWidth="189.3333396911621" text="Source" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="189.3333396911621" text="Category" />
                         <TableColumn fx:id="amountColumn" prefWidth="150.66673278808594" text="Amount" />
                         <TableColumn fx:id="dateColumn" prefWidth="189.99996948242188" text="Date" />
                     </columns>
                 </TableView>
 
-                <Button layoutX="168.0" layoutY="440.0" onAction="#navigateToAddIncome" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Add Income" textFill="WHITE" />
-              	
-              	<DatePicker fx:id="startDateField" layoutX="30.0" layoutY="76.0" onAction="#updateTable" prefHeight="25.0" prefWidth="142.0" promptText="From" />
-            	<DatePicker fx:id="endDateField" layoutX="219.0" layoutY="75.0" onAction="#updateTable" prefHeight="25.0" prefWidth="137.0" promptText="To" />
-            	<TextField fx:id="sourceField" layoutX="395.0" layoutY="75.0" onKeyPressed="#updateAccSource" prefWidth="150.0" promptText="Source" />
-           </children>
+                <Button layoutX="168.0" layoutY="440.0" onAction="#navigateToAddExpense" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Add Expense" textFill="WHITE" />
+            <DatePicker fx:id="startDateField" layoutX="30.0" layoutY="76.0" onAction="#updateTable" prefHeight="25.0" prefWidth="142.0" promptText="From" />
+            <DatePicker fx:id="endDateField" layoutX="219.0" layoutY="75.0" onAction="#updateTable" prefHeight="25.0" prefWidth="137.0" promptText="To" />
+            <ComboBox fx:id="categoryField" layoutX="395.0" layoutY="75.0" onAction="#updateTable" prefWidth="150.0" promptText="Category" />
+            </children>
         </AnchorPane>
     </right>
 </BorderPane>

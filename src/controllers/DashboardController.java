@@ -3,6 +3,7 @@ package controllers;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import javafx.event.ActionEvent;
@@ -17,17 +18,26 @@ import models.SessionManager;
 
 public class DashboardController {
     @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Label balanceLabel;
+
+    @FXML
     private ListView<String> transactionList;
 
     @FXML
     public void initialize() {
-        // Populate the transaction list with sample data
-        transactionList.getItems().addAll(
-            "Received $200 from John",
-            "Paid $50 for groceries",
-            "Received $150 from PayPal",
-            "Paid $20 for coffee"
-        );
+        // Load current user details from SessionManager
+        String username = SessionManager.getInstance().getCurrentUserName();
+        double balance = SessionManager.getInstance().getCurrentUserBalance();
+
+        // Update labels
+        usernameLabel.setText("Username: " + username);
+        balanceLabel.setText("Balance: $" + balance);
+
+        // Load recent transactions (placeholder for now)
+        transactionList.getItems().addAll("Transaction 1", "Transaction 2", "Transaction 3");
     }
     
     public void openSendMoney(ActionEvent event) {
@@ -36,11 +46,7 @@ public class DashboardController {
         
     }
     public void openTransactions(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Transaction History");
-        alert.setHeaderText(null);
-        alert.setContentText("View all transactions here!");
-        alert.showAndWait();
+
         AppUtils.changeScene(event, "/views/TransactionHistory.fxml");
     }
 
@@ -78,5 +84,8 @@ public class DashboardController {
     }
     public void trackExpense(ActionEvent event) {
         AppUtils.changeScene(event, "/views/TrackExpense.fxml");
+    }
+    public void paymentRequest(ActionEvent event) {
+        AppUtils.changeScene(event, "/views/PaymentRequest.fxml");
     }
 }
