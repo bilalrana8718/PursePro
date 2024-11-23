@@ -33,11 +33,10 @@
             
             <TextField fx:id="sourceField" layoutX="80.0" layoutY="140.0" prefWidth="240.0" promptText="Source" style="-fx-text-fill: #EEEEEE; -fx-background-color: transparent; -fx-border-color: #EEEEEE; -fx-border-width: 0px 0px 2px 0px;" />
             
-            <TextField fx:id="amountField" layoutX="80.0" layoutY="180.0" prefWidth="240.0" promptText="Amount" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="amountField" layoutX="80.0" layoutY="180.0" onKeyPressed="#checkIfNum" prefWidth="240.0" promptText="Amount" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
             <DatePicker fx:id="datePicker" layoutX="80.0" layoutY="220.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
 
             
-            <TextField fx:id="userIDField" layoutX="80.0" layoutY="260.0" prefWidth="240.0" promptText="User ID" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
             
             <Button layoutX="80.0" layoutY="300.0" mnemonicParsing="false" onAction="#addIncome" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Add Income" textFill="WHITE" />
            

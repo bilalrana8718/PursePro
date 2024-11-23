@@ -6,6 +6,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionHistoryController">
     <top>
         <Label text="Transaction History" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 20;" alignment="CENTER" />
+        <Button layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #7b0101; -fx-background-radius: 30px; -fx-font-size: 20px; -fx-font-weight: bold;" text="&lt;" textFill="WHITE" />
     </top>
 
     <center>

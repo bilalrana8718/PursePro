@@ -3,15 +3,19 @@ package controllers;
 import db.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.SessionManager;
+import models.Summary;
 import models.TransactionHistory;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.time.LocalDate;
+
+import application.AppUtils;
 
 public class TransactionHistoryController {
 
@@ -103,22 +107,16 @@ public class TransactionHistoryController {
 
     @FXML
     public void exportToCSV() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("TransactionHistory.csv"))) {
-            writer.println("Date,Amount,Category,Recipient");
+    	 String filePath = "TransactionHistory.csv"; // You can dynamically set this or use a FileChooser.
+    	    String message = Summary.exportToCSV(transactionList, filePath);
 
-            for (TransactionHistory transaction : transactionList) {
-                writer.printf("%s,%.2f,%s,%s%n",
-                        transaction.getDate().toString(),
-                        transaction.getAmount(),
-                        transaction.getCategory(),
-                        transaction.getRecipient());
-            }
-
-            statusLabel.setText("Transaction history exported successfully.");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            statusLabel.setText("Error exporting transaction history.");
-        }
+    	    // Update the status label with the returned message
+    	    statusLabel.setText(message);
+    }
+    
+    
+    @FXML
+    public void back(ActionEvent event) {
+    	 AppUtils.changeScene(event, "/views/Dashboard.fxml");
     }
 }
