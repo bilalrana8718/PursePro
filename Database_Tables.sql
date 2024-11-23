@@ -41,8 +41,9 @@ CREATE TABLE FinancialHealthScore (
     UserID INT NOT NULL,
     IncomeToExpenseRatio DECIMAL(10, 2) NOT NULL,
     SavingsPotentialPercentage DECIMAL(5, 2) NOT NULL,
+    OverallScore Decimal(5, 2) NOT NULL,
+    Suggestions Varchar(500),
     Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Remarks ENUM('Healthy', 'Unhealthy') NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -104,6 +105,5 @@ CREATE TABLE Expenses (
     UserID INT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
-drop table Expenses
 
 
