@@ -35,12 +35,13 @@ public class DashboardController {
         AppUtils.changeScene(event, "/views/SendMoney.fxml");
         
     }
-    public void openTransactions() {
+    public void openTransactions(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Transaction History");
         alert.setHeaderText(null);
         alert.setContentText("View all transactions here!");
         alert.showAndWait();
+        AppUtils.changeScene(event, "/views/TransactionHistory.fxml");
     }
 
     public void openSettings() {

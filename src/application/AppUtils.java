@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 public class AppUtils {
 	 public static void changeScene(ActionEvent event, String fxmlPath) {
@@ -17,6 +18,10 @@ public class AppUtils {
 	            // Set the new scene to the stage
 	            Scene scene = new Scene(root, 800, 500);
 	            stage.setScene(scene);
+	            stage.setTitle("PursePro");
+	            Image icon = new Image(AppUtils.class.getResourceAsStream("/views/PUR.png"));
+                stage.getIcons().add(icon);
+	            
 	            stage.show();
 	        } catch (Exception e) {
 	            e.printStackTrace();

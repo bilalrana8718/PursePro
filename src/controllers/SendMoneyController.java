@@ -70,7 +70,7 @@ public class SendMoneyController {
 
             // Check if recipient exists
             Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement checkRecipient = connection.prepareStatement("SELECT UserID FROM User WHERE Email = ?");
+            PreparedStatement checkRecipient = connection.prepareStatement("SELECT UserID FROM User WHERE Username = ?");
             checkRecipient.setString(1, recipientEmail);
             ResultSet recipientResult = checkRecipient.executeQuery();
 

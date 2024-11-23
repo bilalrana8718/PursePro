@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -16,7 +17,9 @@ public class Main extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root,800,500);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Sign Up Page");
+            primaryStage.setTitle("PursePro");
+            Image icon = new Image(AppUtils.class.getResourceAsStream("/views/PUR.png"));
+            primaryStage.getIcons().add(icon);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
