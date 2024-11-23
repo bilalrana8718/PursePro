@@ -41,6 +41,7 @@
                 </VBox>
             	<Button onAction="#trackIncome" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #EEEEEE; -fx-font-size: 16px; -fx-text-fill: #151515;" text="Track Income" />
             	<Button onAction="#trackExpense" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #EEEEEE; -fx-font-size: 16px; -fx-text-fill: #151515;" text="Track Expense" />
+            	<Button onAction="#FinancialHealth" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #EEEEEE; -fx-font-size: 16px; -fx-text-fill: #151515;" text="Financial Health" />
 
             </HBox>
             <Label style="-fx-font-size: 18px; -fx-text-fill: #151515; -fx-font-weight: bold;" text="Recent Transactions" />
