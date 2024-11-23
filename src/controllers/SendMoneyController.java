@@ -92,7 +92,10 @@ public class SendMoneyController {
                     showAlert(Alert.AlertType.ERROR, "Insufficient Funds", "You do not have enough balance for this transaction.");
                     return;
                 }
-
+                
+                //add expense
+                new Expense(amount, category).insertToDataBase();
+                
                 // Deduct amount from sender
                 PreparedStatement deductAmount = connection.prepareStatement("UPDATE User SET AccountBalance = AccountBalance - ? WHERE UserID = ?");
                 deductAmount.setDouble(1, totalAmount);

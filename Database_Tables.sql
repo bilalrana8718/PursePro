@@ -1,6 +1,5 @@
 create database PursePro
 USE PursePro;
-
 CREATE TABLE User (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     UserName VARCHAR(50) NOT NULL,
@@ -12,8 +11,8 @@ CREATE TABLE User (
     TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual',
     AccountBalance DECIMAL(15, 2) DEFAULT 0.00
 );
+UPDATE User SET AccountBalance = 10000 WHERE UserID = 1;
 select *  from User;
-
 CREATE TABLE Transactions (
     TransactionID INT AUTO_INCREMENT PRIMARY KEY,
     Amount DECIMAL(10, 2) NOT NULL,
@@ -97,13 +96,14 @@ CREATE table Incomes(
 );
 select * from Incomes;
 
-CREATE TABLE Expense (
+CREATE TABLE Expenses (
     ExpenseID INT AUTO_INCREMENT PRIMARY KEY,
     Amount DECIMAL(10, 2) NOT NULL,
     Category VARCHAR(50) NOT NULL,
-    Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    DateTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UserID INT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+drop table Expenses
 
 
