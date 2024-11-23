@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.Transaction;
+import models.Expense;
 import models.SessionManager;
 import application.AppUtils;
 import java.io.IOException;

@@ -6,10 +6,11 @@ CREATE TABLE User (
     UserName VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
-    Phone VARCHAR(15),
+    Phone CHAR(11) not null Unique,
     DateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     IsActive BOOLEAN DEFAULT TRUE,
-    TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual'
+    TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual',
+    AccountBalance DECIMAL(15, 2) DEFAULT 0.00
 );
 select *  from User;
 
@@ -94,18 +95,13 @@ CREATE table Incomes(
     UserID INT,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
-select * from Incomes
+select * from Incomes;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+CREATE TABLE Expense (
+    ExpenseID INT AUTO_INCREMENT PRIMARY KEY,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Category VARCHAR(50) NOT NULL,
+    Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UserID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+);

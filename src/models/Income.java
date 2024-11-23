@@ -1,14 +1,19 @@
 	package models;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import db.DatabaseConnection;
+import javafx.beans.binding.NumberExpressionBase;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Alert;
 
 public class Income {
+		private final ObjectProperty<LocalDateTime> date;
 		private int UserID;
 		private int ID;
 		private double amount;
@@ -21,6 +26,7 @@ public class Income {
 			source = s;
 			dateTime = d;
 			UserID = uID;
+			date = new SimpleObjectProperty<>(dateTime);
 			
 		}
 		public Income(double a, String s, int uID){
@@ -28,7 +34,7 @@ public class Income {
 			source = s;
 			dateTime = LocalDateTime.now();
 			UserID = uID;		
-			
+			date = new SimpleObjectProperty<>(dateTime);			
 		}
 		public Income(int id, double a, String s,LocalDateTime d, int uID){
 			ID = id;
@@ -36,7 +42,7 @@ public class Income {
 			source = s;
 			dateTime = LocalDateTime.now();
 			UserID = uID;		
-			
+			date = new SimpleObjectProperty<>(dateTime);			
 		}
 		public void insertToDataBase() {
 			String insertQuery = "INSERT INTO Incomes (Source, Amount, dateTime, UserID) VALUES (?, ?, ?, ?)";
@@ -52,9 +58,9 @@ public class Income {
 				int rowsAffected = preparedStatement.executeUpdate();
 				
 				if (rowsAffected > 0) {
-					showAlert(Alert.AlertType.INFORMATION, "Success", "Sign Up Successful!");
+					showAlert(Alert.AlertType.INFORMATION, "Success", "Income Added!");
 				} else {
-					showAlert(Alert.AlertType.ERROR, "Error", "Sign Up Failed!");
+					showAlert(Alert.AlertType.ERROR, "Error", "adding Income Failed!");
 				}
 				
 			} catch (Exception e) {
@@ -102,4 +108,7 @@ public class Income {
 		public void setDateTime(LocalDateTime dateTime) {
 			this.dateTime = dateTime;
 		}
+		public ObjectProperty<LocalDateTime> dateProperty() { return date;
+ }
+
 	}

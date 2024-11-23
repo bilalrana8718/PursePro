@@ -40,10 +40,8 @@
                   
                 </VBox>
             	<Button onAction="#trackIncome" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #EEEEEE; -fx-font-size: 16px; -fx-text-fill: #151515;" text="Track Income" />
-                <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 10; -fx-background-color: #EEEEEE;">
-                    <Label style="-fx-font-size: 16px; -fx-text-fill: #151515;" text="Expenses This Month" />
-                   
-                </VBox>
+            	<Button onAction="#trackExpense" style="-fx-border-color: #A91D3A; -fx-border-width: 2; -fx-padding: 20; -fx-background-color: #EEEEEE; -fx-font-size: 16px; -fx-text-fill: #151515;" text="Track Expense" />
+
             </HBox>
             <Label style="-fx-font-size: 18px; -fx-text-fill: #151515; -fx-font-weight: bold;" text="Recent Transactions" />
             <ListView fx:id="transactionList" prefHeight="200" style="-fx-background-color: #EEEEEE; -fx-border-color: #A91D3A;" />

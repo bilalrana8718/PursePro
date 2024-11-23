@@ -1,31 +1,27 @@
 package controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import models.SessionManager;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import models.Income;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
-import java.io.IOException;
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import application.AppUtils;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import models.Expense;
+import models.Income;
+import models.SessionManager;
 
-public class IncomeController {
-
+public class AddExpenseController {
 	@FXML
-	private TextField sourceField;
+	private ComboBox<String> categoryField;
 	@FXML
 	private TextField amountField;
 		
@@ -35,8 +31,14 @@ public class IncomeController {
     private String preAmountField = "";
     
     @FXML
-    private void addIncome(ActionEvent event) {
-    	if(datePicker.getValue() == null || sourceField.getText().isBlank() || preAmountField.isBlank())
+    public void initialize() {
+        // Load categories into ComboBox
+        categoryField.setItems(FXCollections.observableArrayList("Groceries", "Rent", "Utilities", "Travel", "Miscellaneous"));
+
+    }
+    @FXML
+    private void addExpense(ActionEvent event) {
+    	if(datePicker.getValue() == null || categoryField.getValue() == null || preAmountField.isBlank())
     	{
             showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill in all required fields.");  
             return;
@@ -45,18 +47,17 @@ public class IncomeController {
         LocalTime currentTime = LocalTime.now();
         LocalDateTime dateTime = LocalDateTime.of(selectedDate, currentTime);
         
-        String source = sourceField.getText();
+        String category = categoryField.getValue();
         
         double amount = Double.parseDouble(preAmountField);
         
-        int userID = SessionManager.getInstance().getCurrentUserId();
         
-        new Income(amount, source, dateTime, userID).insertToDataBase();
+        new Expense(amount,category, dateTime).insertToDataBase();
 
     }
     @FXML
-    private void backToTrackIncome(ActionEvent event){
-        AppUtils.changeScene(event, "/views/TrackIncome.fxml");
+    private void backToTrackExpense(ActionEvent event){
+        AppUtils.changeScene(event, "/views/TrackExpense.fxml");
     }
     @FXML
     public void checkIfNum(KeyEvent event) {
@@ -78,4 +79,5 @@ public class IncomeController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+    
 }
