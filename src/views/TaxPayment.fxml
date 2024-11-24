@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaxCalculatorController">
+    <top>
+        <Label text="Tax Calculator" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10; -fx-text-fill: #151515;" alignment="CENTER" />
+    </top>
+
+    <center>
+        <HBox spacing="20" style="-fx-padding: 20;">
+            <!-- Left Section: Tax Calculation Details -->
+            <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: #EEEEEE; -fx-border-color: #C73659; -fx-border-width: 1px; -fx-border-radius: 10px;" prefWidth="400">
+                <Label text="Tax Calculation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #151515;" />
+                <HBox spacing="10">
+                    <Label text="Start Date:" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <DatePicker fx:id="taxYearStartPicker" />
+                    <Label text="End Date:" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <DatePicker fx:id="taxYearEndPicker" />
+                </HBox>
+                <Button text="Calculate Tax" onAction="#calculateTaxAction" style="-fx-background-color: #A91D3A; -fx-text-fill: #EEEEEE; -fx-font-weight: bold;" />
+
+                <GridPane hgap="10" vgap="10" style="-fx-padding: 20;">
+                    <Label text="Total Income:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label fx:id="incomeLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label text="Total Expenses:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label fx:id="expenseLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label text="Deductible Expenses:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label fx:id="deductibleLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label text="Tax Estimate:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                    <Label fx:id="taxEstimateLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-font-size: 14px; -fx-text-fill: #151515;" />
+                </GridPane>
+                <Label fx:id="statusLabel" text="Status will appear here" style="-fx-text-fill: #C73659; -fx-font-size: 14px;" />
+                <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+                    <Button text="Pay Tax" onAction="#payTaxAction" style="-fx-background-color: #C73659; -fx-text-fill: #EEEEEE; -fx-font-weight: bold;" />
+                    <Button text="Generate Report" onAction="#generateReportAction" style="-fx-background-color: #A91D3A; -fx-text-fill: #EEEEEE; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+
+            <!-- Right Section: Tax Payments Table -->
+            <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: #EEEEEE; -fx-border-color: #C73659; -fx-border-width: 1px; -fx-border-radius: 10px;" prefWidth="400">
+                <Label text="Tax Payment History" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #151515;" />
+                <TableView fx:id="taxPaymentsTable" style="-fx-border-color: #C73659; -fx-border-width: 1px; -fx-border-radius: 10px;" prefHeight="400">
+                    <columns>
+                        <TableColumn fx:id="startDateColumn" text="Start Date" style="-fx-text-fill: #151515;" />
+                        <TableColumn fx:id="endDateColumn" text="End Date" style="-fx-text-fill: #151515;" />
+                        <TableColumn fx:id="taxPaidColumn" text="Tax Paid" style="-fx-text-fill: #151515;" />
+                        <TableColumn fx:id="paymentDateColumn" text="Payment Date" style="-fx-text-fill: #151515;" />
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

@@ -1,5 +1,8 @@
 package models;
 
+import db.DatabaseConnection;
+import java.sql.*;
+
 public class SessionManager {
 
     // Singleton instance
@@ -64,4 +67,29 @@ public class SessionManager {
         currentUserEmail = null;
         currentUserBalance = 0;
     }
+    
+    public void updateBalanceInSession(int userID) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            // Query to get the user's current balance
+            String query = "SELECT AccountBalance FROM User WHERE UserID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                // Retrieve the current balance
+                double currentBalance = resultSet.getDouble("AccountBalance");
+
+                // Update the balance in SessionManager
+                SessionManager.getInstance().setCurrentUserBalance(currentBalance);
+                System.out.println("Session balance updated to: " + currentBalance);
+            } else {
+                System.out.println("User not found for UserID: " + userID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error occurred while updating balance in SessionManager: " + e.getMessage());
+        }
+    }
+
 }

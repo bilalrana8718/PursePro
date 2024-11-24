@@ -11,8 +11,7 @@
 
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.LoginController"
-            >
+            fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
          <children>
@@ -27,21 +26,17 @@
          </children>
       </AnchorPane>
    </left>
-  <right>
+   <right>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER" style="-fx-background-color: #151515;">
          <children>
             <Label layoutX="80.0" layoutY="60.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Login to Purse Pro" textFill="#EEEEEE" />
             
-            <TextField fx:id="emailField" layoutX="80.0" layoutY="140.0" prefWidth="240.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="passwordField" layoutX="80.0" layoutY="200.0" prefWidth="240.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="emailField" layoutX="80.0" layoutY="140.0" prefWidth="240.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #FFFFFF;" />
+            <PasswordField fx:id="passwordField" layoutX="80.0" layoutY="200.0" prefWidth="240.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #FFFFFF;" />
 			
 			<Button text="Login" layoutX="80.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" textFill="WHITE" />
             <Button text="Create an account" layoutX="80.0" layoutY="320.0" mnemonicParsing="false" onAction="#createAnAccount" prefHeight="40.0" prefWidth="240.0" style="-fx-background-color: #C73659; -fx-background-radius: 20px;" textFill="WHITE" />
-           	
             </children>
       </AnchorPane>
    </right>
-
-
 </BorderPane>
-

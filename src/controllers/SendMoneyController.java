@@ -67,30 +67,7 @@ public class SendMoneyController {
     	}
     	
     	
-    	
-    	///////////////////// budget wala kaam //////////////////
-    	
-    	
-    	AtomicReference<Double> totalBudgetAmount= new AtomicReference<Double>(0.0), RemainingBudgetAmount =new AtomicReference<Double>(0.0);
-    	totalBudgetAmount.set(0.0); RemainingBudgetAmount.set(0.0);
-    	BudgetManager.getInstance().getAmount(totalBudgetAmount, RemainingBudgetAmount, category);
-    	
-    	
-    	////use totalBudgetAmount.get() to get totalAmount, and RemainingBudgetAmount.get() to get remaining amoun
-    	
-    	
-    	
-    
-    	System.out.println(totalBudgetAmount.get());
-    	System.out.println(RemainingBudgetAmount.get());
-    	
-    	
-    	///if (.2 * totalBudgetAmount.get() >= remainingBudgetAmount.get())  show alert 80 percent used
-    	
-    	
-    	////////////////////////////////////////////////////
-    	
-    
+//    	AppUtils.handleBudgetCheck(category);
 
 
         double amount;
@@ -161,6 +138,8 @@ public class SendMoneyController {
                 new Expense(amount, category).insertToDataBase();
 
                 BudgetManager.getInstance().budAfterExpense(amount, category);
+                
+                SessionManager.getInstance().updateBalanceInSession(getCurrentUserID());
 
                 // Clear input fields
                 recipientAccountField.clear();

@@ -67,12 +67,6 @@ public class DashboardController {
     }
 
     public void logout(ActionEvent event) throws IOException {
-        // Show a confirmation message
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Logout");
-		alert.setHeaderText(null);
-		alert.setContentText("You have been logged out.");
-		alert.showAndWait();
 		
 		SessionManager.getInstance().clearSession();
          
@@ -98,5 +92,9 @@ public class DashboardController {
     @FXML
     private void Budget(ActionEvent event) {
     	AppUtils.changeScene(event, "/views/TrackBudget.fxml");
+    }
+    @FXML
+    private void taxPayment(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/TaxPayment.fxml");
     }
 }
