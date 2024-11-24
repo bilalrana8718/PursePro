@@ -9,12 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.DatePicker;
+import models.Expense;
 import models.Income; // Model class for Income (you need to create this class)
 import models.IncomeManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
@@ -32,11 +34,14 @@ public class TrackIncomeController {
     @FXML private TableColumn<Income, String> sourceColumn;
     @FXML private TableColumn<Income, Double> amountColumn;
     @FXML private TableColumn<Income, String> dateColumn;
+    @FXML private TableColumn<Income, Integer> idColumn;
     @FXML private Label totalIncomeLabel;
     @FXML private Button addIncomeButton;
     @FXML private TextField sourceField;
     @FXML private DatePicker startDateField;
     @FXML private DatePicker endDateField;
+    @FXML private TextField IncomeIDField;
+    
 
     private ObservableList<Income> incomeList = FXCollections.observableArrayList();
 
@@ -51,6 +56,7 @@ public class TrackIncomeController {
     @FXML
     public void initialize() {
         // Initialize the columns
+    	idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
         sourceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSource()));
 
         amountColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getAmount()).asObject());
@@ -94,7 +100,14 @@ public class TrackIncomeController {
     		updateTable();
     	}
     }
-
+    @FXML
+    private void removeIncome(ActionEvent event) {
+    	if(IncomeIDField.getText().isBlank()) {
+    		return;
+    	}
+    	incMan.removeIncome(IncomeIDField.getText());
+    	this.updateTable(event);
+    }
 
 }
 

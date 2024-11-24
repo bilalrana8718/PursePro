@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
@@ -33,12 +35,13 @@ public class TrackExpenseController {
     @FXML private TableColumn<Expense, String> categoryColumn;
     @FXML private TableColumn<Expense, Double> amountColumn;
     @FXML private TableColumn<Expense, String> dateColumn;
+    @FXML private TableColumn<Expense, Integer> idColumn;
     @FXML private Label totalExpenseLabel;
     @FXML private Button addIncomeButton;
     @FXML private ComboBox<String> categoryField;
     @FXML private DatePicker startDateField;
     @FXML private DatePicker endDateField;
-    
+    @FXML private TextField ExpenseIDField;
 
     private ObservableList<Expense> expenseList = FXCollections.observableArrayList();
 
@@ -53,6 +56,7 @@ public class TrackExpenseController {
     @FXML
     public void initialize() {
         // Initialize the columns
+    	idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
         categoryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategory()));
 
         amountColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getAmount()).asObject());
@@ -92,6 +96,14 @@ public class TrackExpenseController {
         expenseTable.setItems(expenseList);       
         
    }
+    @FXML
+    private void removeExpense(ActionEvent event) {
+    	if(ExpenseIDField.getText().isBlank()) {
+    		return;
+    	}
+    	expMan.removeExpense(ExpenseIDField.getText());
+    	this.updateTable(event);
+    }
 
 }
 

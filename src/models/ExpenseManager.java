@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 import db.DatabaseConnection;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class ExpenseManager {
 	
@@ -102,5 +104,28 @@ public class ExpenseManager {
         }   
     		
     	return sum;
+    }
+    
+    public void removeExpense(String IDText) {
+    	try {
+    		int id = Integer.parseInt(IDText);
+    		int UserID = SessionManager.getInstance().getCurrentUserId();
+    		try (Connection connection = DatabaseConnection.getConnection();
+    				PreparedStatement preparedStatement = connection.prepareStatement("Delete from Expenses where ExpenseId = ? and UserID = ?")) {
+
+    			preparedStatement.setInt(1, id);
+    			preparedStatement.setInt(2, UserID);
+    			preparedStatement.executeUpdate();
+
+    		}
+    		catch (Exception e) {
+
+    		}    		
+    		
+    		
+    	}
+    	catch(Exception e) {
+    		
+    	}
     }
 }
