@@ -32,8 +32,10 @@
             <TextField fx:id="amountField" layoutX="80.0" layoutY="200.0" prefWidth="240.0" promptText="Amount" 
                        style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #EEEEEE;" />
             
-            <TextArea fx:id="descriptionField" layoutX="80.0" layoutY="260.0" prefWidth="240.0" prefHeight="80.0" promptText="Description (Optional)" wrapText="true"
+            <TextArea fx:id="descriptionField" layoutX="80.0" layoutY="260.0" prefWidth="240.0" prefHeight="40.0" promptText="Description (Optional)" wrapText="true"
                       style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #EEEEEE;" />
+            
+            <ComboBox fx:id="categoryField" layoutX="80.0" layoutY="320.0" prefWidth="240.0" promptText="Select Category" style="-fx-text-fill: #FFFFFF; -fx-background-color: transparent; -fx-border-color: #A91D3A; -fx-border-width: 0px 0px 2px 0px;" />
             
             <Button text="Submit Request" layoutX="80.0" layoutY="360.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="40.0" prefWidth="240.0" 
                     style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" textFill="WHITE" />

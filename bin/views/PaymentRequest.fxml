@@ -15,6 +15,7 @@
                     <TableColumn text="Date Created" fx:id="dateCreatedColumn" />
                     <TableColumn text="Sender" fx:id="senderColumn" />
                     <TableColumn text="Recipient" fx:id="recipientColumn" />
+                    <TableColumn text="Category" fx:id="categoryColumn" />
                     <TableColumn text="Amount" fx:id="amountColumn" />
                     <TableColumn text="Status" fx:id="statusColumn" />
                 </columns>

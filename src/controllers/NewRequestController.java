@@ -24,14 +24,24 @@ public class NewRequestController {
 
     @FXML
     private TextArea descriptionField;
-
+    
+    @FXML
+    private ComboBox<String> categoryField;
+    
+    @FXML
+    public void initialize() {
+        // Load categories into ComboBox
+        categoryField.getItems().addAll("Groceries", "Rent", "Utilities", "Travel", "Miscellaneous");
+    }
+    
     @FXML
     private void submitRequest() {
         String recipientEmail = recipientEmailField.getText();
         String amountText = amountField.getText();
         String description = descriptionField.getText();
+        String category = categoryField.getValue();
 
-        if (recipientEmail.isEmpty() || amountText.isEmpty()) {
+        if (recipientEmail.isEmpty() || amountText.isEmpty() || category.isEmpty()) {
             showAlert(AlertType.ERROR, "Validation Error", "Please fill in all required fields.");
             return;
         }
@@ -68,11 +78,12 @@ public class NewRequestController {
             }
 
             // Insert payment request
-            String insertQuery = "INSERT INTO PaymentRequest (SenderID, RecipientID, Amount, Status) VALUES (?, ?, ?, 'Pending')";
+            String insertQuery = "INSERT INTO PaymentRequest (SenderID, RecipientID, Category, Amount, Status) VALUES (?, ?, ?, ?, 'Pending')";
             PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
             insertStatement.setInt(1, senderId);
             insertStatement.setInt(2, recipientId);
-            insertStatement.setDouble(3, amount);
+            insertStatement.setString(3, category);
+            insertStatement.setDouble(4, amount);
             insertStatement.executeUpdate();
 
             showAlert(AlertType.INFORMATION, "Success", "Payment request sent successfully.");

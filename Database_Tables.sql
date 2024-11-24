@@ -69,6 +69,7 @@ CREATE TABLE PaymentRequest (
     RequestID INT AUTO_INCREMENT PRIMARY KEY,
     SenderID INT NOT NULL,
     RecipientID INT NOT NULL,
+    Category VARCHAR(50) NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Status ENUM('Pending', 'Completed', 'Declined', 'Cancelled') NOT NULL DEFAULT 'Pending',
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -76,6 +77,7 @@ CREATE TABLE PaymentRequest (
     FOREIGN KEY (SenderID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (RecipientID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE Subscriptions (
     SubscriptionID INT AUTO_INCREMENT PRIMARY KEY,
