@@ -11,7 +11,7 @@ CREATE TABLE User (
     TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual',
     AccountBalance DECIMAL(15, 2) DEFAULT 0.00
 );
-select *  from User;
+select *  from Transactions;
 CREATE TABLE Transactions (
     TransactionID INT AUTO_INCREMENT PRIMARY KEY,
     Amount DECIMAL(10, 2) NOT NULL,

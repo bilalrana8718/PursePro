@@ -1,21 +1,26 @@
 package controllers;
 
 import db.DatabaseConnection;
+
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.IncomeManager;
 import models.ExpenseManager;
 import models.SessionManager;
 import models.TaxPayment;
+import models.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
+import application.AppUtils;
 
 public class TaxCalculatorController {
 	
@@ -78,7 +83,7 @@ public class TaxCalculatorController {
             double deductibleExpenses = Math.min(totalExpenses, totalIncome * 0.5); // 50% cap on deductions
             deductibleLabel.setText(String.format("$%.2f", deductibleExpenses));
 
-            double taxEstimate = calculateTax(totalIncome, deductibleExpenses);
+            double taxEstimate = TaxPayment.calculateTax(totalIncome, deductibleExpenses);
             taxEstimateLabel.setText(String.format("$%.2f", taxEstimate));
 
         } catch (Exception e) {
@@ -87,18 +92,8 @@ public class TaxCalculatorController {
         }
     }
 
-    private double calculateTax(double totalIncome, double deductibleExpenses) {
-        double taxableIncome = totalIncome - deductibleExpenses;
-        if (taxableIncome <= 0) return 0;
-
-        // Example tax brackets
-        if (taxableIncome <= 5000) return taxableIncome * 0.1;  // 10%
-        if (taxableIncome <= 20000) return 500 + (taxableIncome - 5000) * 0.2; // 20%
-        return 3500 + (taxableIncome - 20000) * 0.3; // 30%
-    }
-
     @FXML
-    private void calculateTaxAction() {
+    private void displayIncomeAndDeductions() {
         updateSummary();
     }
 
@@ -159,6 +154,7 @@ public class TaxCalculatorController {
                 taxPaymentStmt.executeUpdate();
 
                 statusLabel.setText("Tax payment successful.");
+                
                 generateReportAction(); // Refresh the payment table
             }
         } catch (Exception e) {
@@ -170,30 +166,18 @@ public class TaxCalculatorController {
 
     @FXML
     private void generateReportAction() {
-        ObservableList<TaxPayment> taxData = FXCollections.observableArrayList();
-
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT StartDate, EndDate, TaxPaid, PaymentDate FROM TaxPayments WHERE UserID = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, SessionManager.getInstance().getCurrentUserId());
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String startDate = resultSet.getDate("StartDate").toString();
-                String endDate = resultSet.getDate("EndDate").toString();
-                double taxPaid = resultSet.getDouble("TaxPaid");
-                String paymentDate = resultSet.getTimestamp("PaymentDate").toLocalDateTime().toString();
-
-                taxData.add(new TaxPayment(startDate, endDate, taxPaid, paymentDate));
-            }
-
-            // Populate the TableView
-            taxPaymentsTable.setItems(taxData);
-
+        try {
+            // Fetch tax payment data and populate the TableView
+            taxPaymentsTable.setItems(TaxPayment.fetchTaxPaymentData());
         } catch (SQLException e) {
             e.printStackTrace();
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error fetching tax payment data.");
             errorAlert.showAndWait();
         }
+    }
+    @FXML
+    private void goBackAction(ActionEvent event) {
+        // Logic to navigate back to the previous screen
+        AppUtils.changeScene(event, "/views/Dashboard.fxml");
     }
 }

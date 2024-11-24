@@ -65,26 +65,53 @@ public class TransactionHistory {
     public void setRecipient(String recipient) { this.recipient.set(recipient); }
     
     
+//    public static ResultSet getTransactionResultSet(int userId, LocalDate startDate, LocalDate endDate) throws SQLException {
+//        Connection connection = DatabaseConnection.getConnection();
+//        String query = "SELECT t.TransactionID, t.Amount, t.Category, t.Date, t.Description, u.UserName AS Recipient " +
+//                       "FROM Transactions t " +
+//                       "JOIN User u ON t.RecipientID = u.UserID " +
+//                       "WHERE t.UserID = ?";
+//
+//        // Add date filtering if provided
+//        if (startDate != null && endDate != null) {
+//            query += " AND t.Date BETWEEN ? AND ?";
+//        }
+//
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        statement.setInt(1, userId);
+//
+//        if (startDate != null && endDate != null) {
+//            statement.setDate(2, Date.valueOf(startDate));
+//            statement.setDate(3, Date.valueOf(endDate));
+//        }
+//
+//        return statement.executeQuery();
+//    }
+    
     public static ResultSet getTransactionResultSet(int userId, LocalDate startDate, LocalDate endDate) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
-        String query = "SELECT t.TransactionID, t.Amount, t.Category, t.Date, t.Description, u.UserName AS Recipient " +
+        String query = "SELECT t.TransactionID, t.Amount, t.Category, t.Date, t.Description, " +
+                       "CASE WHEN t.UserID = ? THEN u.UserName ELSE s.UserName END AS Recipient " +
                        "FROM Transactions t " +
-                       "JOIN User u ON t.RecipientID = u.UserID " +
-                       "WHERE t.UserID = ?";
+                       "LEFT JOIN User u ON t.RecipientID = u.UserID " +
+                       "LEFT JOIN User s ON t.UserID = s.UserID " +
+                       "WHERE t.UserID = ? OR t.RecipientID = ?";
 
-        // Add date filtering if provided
         if (startDate != null && endDate != null) {
             query += " AND t.Date BETWEEN ? AND ?";
         }
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, userId);
+        statement.setInt(2, userId);
+        statement.setInt(3, userId);
 
         if (startDate != null && endDate != null) {
-            statement.setDate(2, Date.valueOf(startDate));
-            statement.setDate(3, Date.valueOf(endDate));
+            statement.setDate(4, Date.valueOf(startDate));
+            statement.setDate(5, Date.valueOf(endDate));
         }
 
         return statement.executeQuery();
     }
+
 }

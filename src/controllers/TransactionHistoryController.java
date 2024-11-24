@@ -107,7 +107,7 @@ public class TransactionHistoryController {
 
     @FXML
     public void exportToCSV() {
-    	 String filePath = "TransactionHistory.csv"; // You can dynamically set this or use a FileChooser.
+    	 String filePath = "TransactionHistory.csv"; 
     	    String message = Summary.exportToCSV(transactionList, filePath);
 
     	    // Update the status label with the returned message
