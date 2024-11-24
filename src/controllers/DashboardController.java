@@ -95,4 +95,8 @@ public class DashboardController {
     	AppUtils.changeScene(event, "/views/FinancialHealth.fxml");
 
     }
+    @FXML
+    private void Budget(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/TrackBudget.fxml");
+    }
 }

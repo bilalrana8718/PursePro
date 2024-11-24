@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackBudgetController">
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="177.0" style="-fx-background-color: #C73659;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="21.0" layoutY="291.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Budget Overview" textFill="WHITE" />
+                <Label layoutX="38.0" layoutY="326.0" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Purse Pro" textFill="WHITE" />
+                <Label layoutX="21.0" layoutY="409.0" prefHeight="58.0" prefWidth="211.0" style="-fx-font-size: 14px;" text="Your trusted partner for secure financial transactions." textFill="WHITE" wrapText="true" />
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToDashBoard" style="-fx-background-color: #7b0101; -fx-background-radius: 30px; -fx-font-size: 20px; -fx-font-weight: bold;" text="&lt;" textFill="WHITE" />
+
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="600.0" prefWidth="630.0" style="-fx-background-color: #151515;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="190.0" layoutY="27.0" prefHeight="50.0" prefWidth="161.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Current Budgets" textFill="#EEEEEE">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+
+                <TableView fx:id="budgetTable" layoutX="23.0" layoutY="118.0" prefHeight="225.0" prefWidth="530.0">
+                    <columns>
+                        <TableColumn fx:id="categoryColumn" prefWidth="189.3333396911621" text="Category" />
+                        <TableColumn fx:id="amountColumn" prefWidth="150.66673278808594" text="Amount" />
+                        <TableColumn fx:id="dateColumn" prefWidth="189.99996948242188" text="Date Modified" />
+                    </columns>
+                </TableView>
+            	
+            	<ComboBox fx:id="categoryField" layoutX="80.0" layoutY="380.0"  promptText="Select Category" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-text-fill: #FFFFFF; -fx-border-width: 0px 0px 2px 0px;"/>            
+            	<TextField fx:id="amountField" layoutX="300.0" layoutY="380.0" onKeyPressed="#checkIfNum" prefWidth="200.0" promptText="Amount" style="-fx-background-color: transparent; -fx-border-color: #0078D7; -fx-border-width: 0px 0px 2px 0px;" />
+
+                <Button layoutX="216.0" layoutY="440.0" onAction="#updateBudget" prefHeight="40.0" prefWidth="157.0" style="-fx-background-color: #A91D3A; -fx-background-radius: 20px;" text="Update Budget" textFill="WHITE" />
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>

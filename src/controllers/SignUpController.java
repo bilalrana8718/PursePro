@@ -2,6 +2,7 @@
 package controllers;
 
 import db.DatabaseConnection;
+import models.BudgetManager;
 import models.User;
 
 import javafx.event.ActionEvent;
@@ -77,6 +78,8 @@ public class SignUpController {
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Sign Up Failed!");
             }
+            
+            BudgetManager.getInstance().addBudgets(user.getEmail());
 
         } catch (Exception e) {
             e.printStackTrace();
