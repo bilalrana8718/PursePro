@@ -1,20 +1,21 @@
 package controllers;
 
 import db.DatabaseConnection;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.Transaction;
+import models.BudgetManager;
 import models.Expense;
 import models.SessionManager;
 import application.AppUtils;
 import java.io.IOException;
-
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.concurrent.atomic.AtomicReference;
+
 
 public class SendMoneyController {
 
@@ -56,14 +57,41 @@ public class SendMoneyController {
 
     @FXML
     public void sendMoney(ActionEvent event) {
-        String recipientEmail = recipientAccountField.getText().trim();
-        String category = categoryField.getValue();
-        String description = descriptionField.getText().trim();
+    	String recipientEmail = recipientAccountField.getText().trim();
+    	String category = categoryField.getValue();
+    	String description = descriptionField.getText().trim();
+    	
+    	if (recipientEmail.isEmpty() || amountField.getText().isEmpty() || category == null) {
+    		showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill in all required fields.");
+    		return;
+    	}
+    	
+    	
+    	
+    	///////////////////// budget wala kaam //////////////////
+    	
+    	
+    	AtomicReference<Double> totalBudgetAmount= new AtomicReference<Double>(0.0), RemainingBudgetAmount =new AtomicReference<Double>(0.0);
+    	totalBudgetAmount.set(0.0); RemainingBudgetAmount.set(0.0);
+    	BudgetManager.getInstance().getAmount(totalBudgetAmount, RemainingBudgetAmount, category);
+    	
+    	
+    	////use totalBudgetAmount.get() to get totalAmount, and RemainingBudgetAmount.get() to get remaining amoun
+    	
+    	
+    	
+    
+    	System.out.println(totalBudgetAmount.get());
+    	System.out.println(RemainingBudgetAmount.get());
+    	
+    	
+    	///if (.2 * totalBudgetAmount.get() >= remainingBudgetAmount.get())  show alert 80 percent used
+    	
+    	
+    	////////////////////////////////////////////////////
+    	
+    
 
-        if (recipientEmail.isEmpty() || amountField.getText().isEmpty() || category == null) {
-            showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill in all required fields.");
-            return;
-        }
 
         double amount;
         try {
@@ -126,11 +154,13 @@ public class SendMoneyController {
                 Transaction transaction = new Transaction(amount, category, description, getCurrentUserID(), recipientID);
                 transaction.addTransaction();
 
+                // Show success alert
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Money sent successfully!");
+
                 // Add expense
                 new Expense(amount, category).insertToDataBase();
 
-                // Show success alert
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Money sent successfully!");
+                BudgetManager.getInstance().budAfterExpense(amount, category);
 
                 // Clear input fields
                 recipientAccountField.clear();

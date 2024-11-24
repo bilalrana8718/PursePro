@@ -15,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import models.BudgetManager;
 import models.Expense;
 import models.Income;
 import models.SessionManager;
@@ -53,6 +54,8 @@ public class AddExpenseController {
         
         
         new Expense(amount,category, dateTime).insertToDataBase();
+        
+        BudgetManager.getInstance().budAfterExpense(amount, category);
 
     }
     @FXML
