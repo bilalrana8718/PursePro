@@ -11,7 +11,6 @@ CREATE TABLE User (
     TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual',
     AccountBalance DECIMAL(15, 2) DEFAULT 0.00
 );
-UPDATE User SET AccountBalance = 10000 WHERE UserID = 1;
 select *  from User;
 CREATE TABLE Transactions (
     TransactionID INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,12 +27,12 @@ CREATE TABLE Transactions (
 CREATE TABLE Budget (
     BudgetID INT AUTO_INCREMENT PRIMARY KEY,
     UserID INT NOT NULL,
-    Amount DECIMAL(10, 2) DEFAULT 0.00,
+    RemainingAmount DECIMAL(10, 2) DEFAULT 0.00,
+    TotalAmount decimal(10, 2) DEFAULT 0.00,
     Category Varchar(100),
     DateModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE FinancialHealthScore (
     ScoreID INT AUTO_INCREMENT PRIMARY KEY,

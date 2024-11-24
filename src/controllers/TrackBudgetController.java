@@ -68,7 +68,7 @@ public class TrackBudgetController {
             return;
     	}
     	
-    	budMan.updateBudget(Double.parseDouble(preAmountField), categoryField.getValue());
+    	budMan.updateBudget(Double.parseDouble(preAmountField),Double.parseDouble(preAmountField), categoryField.getValue());
         
     	budgetList = budMan.getBudgetList(budgetList);
         budgetTable.setItems(budgetList);     	 	

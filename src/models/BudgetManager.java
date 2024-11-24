@@ -1,5 +1,6 @@
 package models;
 
+import java.lang.ref.Reference;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicReference;
 
 import db.DatabaseConnection;
 import javafx.collections.ObservableList;
@@ -41,7 +43,7 @@ public class BudgetManager {
             	while (resultSet.next()) {
             		int userID = resultSet.getInt("UserID");
             		int id = resultSet.getInt("BudgetID");
-            		double amount = resultSet.getDouble("Amount");
+            		double amount = resultSet.getDouble("RemainingAmount");
             		String source = resultSet.getString("Category");
             		LocalDateTime dateTime = resultSet.getTimestamp("DateModified").toLocalDateTime();
 
@@ -54,15 +56,16 @@ public class BudgetManager {
         }
     	return budgetList;
     }
-    public void updateBudget(double amount, String category) {
+    public void updateBudget(double totalAmount, double amount, String category) {
     	int UserID = SessionManager.getInstance().getCurrentUserId();
     	try (Connection connection = DatabaseConnection.getConnection()) {
-    		PreparedStatement updateBud = connection.prepareStatement("UPDATE Budget SET Amount = ?, DateModified=? WHERE category = ? and UserID = ?");
+    		PreparedStatement updateBud = connection.prepareStatement("UPDATE Budget SET TotalAmount = ?, RemainingAmount = ?, DateModified=? WHERE category = ? and UserID = ?");
     		
-    		updateBud.setDouble(1, amount);
-    		updateBud.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
-    		updateBud.setString(3, category);
-    		updateBud.setInt(4, UserID);
+    		updateBud.setDouble(1, totalAmount);
+    		updateBud.setDouble(2, amount);
+    		updateBud.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+    		updateBud.setString(4, category);
+    		updateBud.setInt(5, UserID);
     		
 			int rowsAffected = updateBud.executeUpdate();
 			
@@ -79,23 +82,28 @@ public class BudgetManager {
     }
     public void budAfterExpense(double expAmount, String category) {
     	int UserID = SessionManager.getInstance().getCurrentUserId();
-    	String query = "select Amount from Budget where UserID= " + UserID + " and category = '"+category+"'";
+    	String query = "select TotalAmount, RemainingAmount from Budget where UserID= " + UserID + " and category = '"+category+"'";
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			
         	if (resultSet.next()) {
-        		double budgetAmount = resultSet.getInt("Amount");
-        		if(budgetAmount == 0) {
+        		double budgetAmount = resultSet.getDouble("TotalAmount");
+        		double preRemainingAmount = resultSet.getDouble("RemainingAmount");
+        		
+        		if(preRemainingAmount == 0) {
         			return;
         		}
         		else {
-        			double remainingAmount = budgetAmount- expAmount>0? budgetAmount-expAmount: 0;
+        			double remainingAmount = preRemainingAmount- expAmount>0? preRemainingAmount-expAmount: 0;
         			
         			if(remainingAmount == 0) {
         				showAlert(Alert.AlertType.INFORMATION, "Success", "You Have Used all Budget of Category "+category);
         			}
-        			updateBudget(remainingAmount, category);
+        			else if(remainingAmount <= budgetAmount*.2) {
+        				showAlert(Alert.AlertType.INFORMATION, "Success", "You Have Used more than 80% of Budget of Category "+category);        				
+        			}
+        			updateBudget(budgetAmount, remainingAmount, category);
         		}
         	}
 		}
@@ -125,7 +133,23 @@ public class BudgetManager {
     }    	
     	
     }
-    
+    public void getAmount(AtomicReference<Double> totalAmount, AtomicReference<Double> remainingAmount, String category) {
+    	int UserID = SessionManager.getInstance().getCurrentUserId();
+    	String query = "select TotalAmount, RemainingAmount from Budget where UserID= " + UserID + " and category = '"+category+"'";
+		try (Connection connection = DatabaseConnection.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			
+        	if (resultSet.next()) {
+        		totalAmount.set(resultSet.getDouble("TotalAmount"));
+        		remainingAmount.set(resultSet.getDouble("RemainingAmount"));
+        		}
+		}
+	catch (SQLException e) {
+        e.printStackTrace();
+    }    	
+    	
+    }
 	private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

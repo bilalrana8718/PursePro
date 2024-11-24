@@ -35,7 +35,7 @@ public class Budget {
 		userID = UserID;
 	}	
 	public void insertToDataBase() {
-		String insertQuery = "INSERT INTO Budget (Category, Amount, dateModified, UserID) VALUES (?, ?, ?, ?)";
+		String insertQuery = "INSERT INTO Budget (Category, RemainingAmount, dateModified, UserID, TotalAmount) VALUES (?, ?, ?, ?,0)";
 		
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
