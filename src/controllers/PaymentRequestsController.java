@@ -7,8 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import models.Expense;
 import models.PaymentRequest;
 import models.SessionManager;
+import models.Transaction;
 
 import java.sql.*;
 
@@ -29,6 +31,9 @@ public class PaymentRequestsController {
 
     @FXML
     private TableColumn<PaymentRequest, String> recipientColumn;
+    
+    @FXML
+    private TableColumn<PaymentRequest, String> categoryColumn;
 
     @FXML
     private TableColumn<PaymentRequest, Double> amountColumn;
@@ -44,6 +49,7 @@ public class PaymentRequestsController {
         dateCreatedColumn.setCellValueFactory(cellData -> cellData.getValue().dateCreatedProperty().asString());
         senderColumn.setCellValueFactory(cellData -> cellData.getValue().senderNameProperty());
         recipientColumn.setCellValueFactory(cellData -> cellData.getValue().recipientNameProperty());
+        categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
@@ -55,7 +61,7 @@ public class PaymentRequestsController {
         paymentRequestsList.clear();
 
         try (Connection connection = DatabaseConnection.getConnection()) {
-        	String query = "SELECT pr.RequestID, pr.Amount, pr.Status, pr.DateCreated, s.UserName AS Sender " +
+        	String query = "SELECT pr.RequestID, pr.Amount, pr.category, pr.Status, pr.DateCreated, s.UserName AS Sender " +
                     "FROM PaymentRequest pr " +
                     "JOIN User s ON pr.SenderID = s.UserID " +
                     "WHERE pr.RecipientID = ?";
@@ -73,7 +79,8 @@ public class PaymentRequestsController {
                         resultSet.getString("Status"),
                         resultSet.getTimestamp("DateCreated").toLocalDateTime(),
                         resultSet.getString("Sender"),
-                        SessionManager.getInstance().getCurrentUserName()
+                        SessionManager.getInstance().getCurrentUserName(),
+                        resultSet.getString("category")
                 ));
             }
 
@@ -165,16 +172,18 @@ public class PaymentRequestsController {
                 PreparedStatement updateRequestStmt = connection.prepareStatement(updateRequestQuery);
                 updateRequestStmt.setInt(1, selectedRequest.getRequestId());
                 updateRequestStmt.executeUpdate();
+                
+                // Record transaction
+                Transaction transaction = new Transaction(selectedRequest.getAmount(),
+                		selectedRequest.getCategory(),
+                		"Payment for request ID: " + selectedRequest.getRequestId(),
+                		SessionManager.getInstance().getCurrentUserId(),
+                		recipientUserId);
+                transaction.addTransaction();
 
-                // Record the transaction
-                String recordTransactionQuery = "INSERT INTO Transactions (Amount, Category, Description, UserID, RecipientID) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement recordTransactionStmt = connection.prepareStatement(recordTransactionQuery);
-                recordTransactionStmt.setDouble(1, selectedRequest.getAmount());
-                recordTransactionStmt.setString(2, "Payment Request");
-                recordTransactionStmt.setString(3, "Payment for request ID: " + selectedRequest.getRequestId());
-                recordTransactionStmt.setInt(4, SessionManager.getInstance().getCurrentUserId());
-                recordTransactionStmt.setInt(5, recipientUserId);
-                recordTransactionStmt.executeUpdate();
+                // Add expense
+                new Expense(selectedRequest.getAmount(),
+                		selectedRequest.getCategory()).insertToDataBase();
 
                 // Show success alert
                 showAlert(Alert.AlertType.INFORMATION, "Payment Success", "The payment was completed successfully.");

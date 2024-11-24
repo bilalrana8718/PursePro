@@ -14,14 +14,16 @@ public class PaymentRequest {
     private final ObjectProperty<LocalDateTime> dateCreated;
     private final StringProperty senderName;
     private final StringProperty recipientName;
+    private final StringProperty category;
 
-    public PaymentRequest(int requestId, double amount, String status, LocalDateTime dateCreated, String senderName, String recipientName) {
+    public PaymentRequest(int requestId, double amount, String status, LocalDateTime dateCreated, String senderName, String recipientName, String category) {
         this.requestId = new SimpleIntegerProperty(requestId);
         this.amount = new SimpleDoubleProperty(amount);
         this.status = new SimpleStringProperty(status);
         this.dateCreated = new SimpleObjectProperty<>(dateCreated);
         this.senderName = new SimpleStringProperty(senderName);
         this.recipientName = new SimpleStringProperty(recipientName);
+        this.category = new SimpleStringProperty(category);
     }
 
     public int getRequestId() { return requestId.get(); }
@@ -41,4 +43,8 @@ public class PaymentRequest {
 
     public String getRecipientName() { return recipientName.get(); }
     public StringProperty recipientNameProperty() { return recipientName; }
+
+    public String getCategory() { return category.get(); }
+    public StringProperty categoryProperty() { return category; }
+
 }
