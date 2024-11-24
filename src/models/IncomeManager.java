@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -103,5 +104,29 @@ public class IncomeManager {
         }   
     		
     	return sum;
+    }
+    
+    
+    public void removeIncome(String IDText) {
+    	try {
+    		int id = Integer.parseInt(IDText);
+    		int UserID = SessionManager.getInstance().getCurrentUserId();
+    		try (Connection connection = DatabaseConnection.getConnection();
+    				PreparedStatement preparedStatement = connection.prepareStatement("Delete from Incomes where IncomeId = ? and UserID = ?")) {
+
+    			preparedStatement.setInt(1, id);
+    			preparedStatement.setInt(2, UserID);
+    			preparedStatement.executeUpdate();
+
+    		}
+    		catch (Exception e) {
+
+    		}    		
+    		
+    		
+    	}
+    	catch(Exception e) {
+    		
+    	}
     }
 }
