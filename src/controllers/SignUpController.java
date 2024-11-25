@@ -79,7 +79,6 @@ public class SignUpController {
                 showAlert(Alert.AlertType.ERROR, "Error", "Sign Up Failed!");
             }
             
-            BudgetManager.getInstance().addBudgets(user.getEmail());
 
         } catch (Exception e) {
             e.printStackTrace();

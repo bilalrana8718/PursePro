@@ -150,6 +150,56 @@ public class BudgetManager {
     }    	
     	
     }
+    public boolean budgetExists(String category, int UserID) {
+    	String query = "select * from Budget where UserID= " + UserID + " and category = '"+category+"'";
+		try (Connection connection = DatabaseConnection.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			
+        	if (resultSet.next()) {
+        		return true;
+        	}
+        	return false;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}    	
+		return false;
+    }
+    public void addBudget(double totalAmount, double remainingAmount, String category) {
+    	int UserID = SessionManager.getInstance().getCurrentUserId();
+    	if(this.budgetExists(category, UserID)) {
+			showAlert(Alert.AlertType.ERROR, "Error", "Budget of the category already exists!");
+    		return;
+    	}
+    	
+    	new Budget(totalAmount, category, UserID).insertToDataBase();
+    }
+    public void removeBudget(String category) {
+    	int UserID = SessionManager.getInstance().getCurrentUserId();
+    	if(!this.budgetExists(category, UserID)) {
+			showAlert(Alert.AlertType.ERROR, "Error", "Budget of the category doesn't exists!");
+    		return;
+    	}    
+    	
+    	try (Connection connection = DatabaseConnection.getConnection()) {
+    		PreparedStatement removeBud = connection.prepareStatement("Delete from Budget WHERE category = ? and UserID = ?");
+    		
+    		removeBud.setString(1, category);
+    		removeBud.setInt(2, UserID);
+    		
+			int rowsAffected = removeBud.executeUpdate();
+			
+			if (rowsAffected > 0) {
+				showAlert(Alert.AlertType.INFORMATION, "Success", "Budget Removed!");
+			} else {
+				showAlert(Alert.AlertType.ERROR, "Error", "Removing Budget Failed!");
+			}    		
+    	}
+    	catch (SQLException e) {
+            e.printStackTrace();
+        }     	
+    }
 	private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
