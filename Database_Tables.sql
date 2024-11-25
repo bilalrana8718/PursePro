@@ -11,7 +11,8 @@ CREATE TABLE User (
     TypeOfAccount ENUM('Induvidual', 'Organization') DEFAULT 'Induvidual',
     AccountBalance DECIMAL(15, 2) DEFAULT 0.00
 );
-select *  from Transactions;
+
+select *  from User;
 CREATE TABLE Transactions (
     TransactionID INT AUTO_INCREMENT PRIMARY KEY,
     Amount DECIMAL(10, 2) NOT NULL,
@@ -69,7 +70,6 @@ CREATE TABLE PaymentRequest (
     RequestID INT AUTO_INCREMENT PRIMARY KEY,
     SenderID INT NOT NULL,
     RecipientID INT NOT NULL,
-    Category VARCHAR(50) NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Status ENUM('Pending', 'Completed', 'Declined', 'Cancelled') NOT NULL DEFAULT 'Pending',
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -109,14 +109,6 @@ CREATE TABLE Expenses (
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE TaxPayments (
-    TaxID INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT NOT NULL,
-    StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL,
-    TaxPaid DOUBLE NOT NULL,
-    PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
-);
-drop table TaxPayments;
-select * from TaxPayments;
+select * from expenses
+
+delete from expenses where ExpenseID = 6 and UserID = 6

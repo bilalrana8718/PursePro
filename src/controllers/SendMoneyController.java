@@ -81,7 +81,20 @@ public class SendMoneyController {
             showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter a valid numeric amount.");
             return;
         }
-
+        totalAmount = amount * 1.02;
+        
+        BudgetManager bM = BudgetManager.getInstance();
+        if(bM.budgetExists(category, getCurrentUserID())) {
+        	AtomicReference<Double> remainingAmount = new AtomicReference<Double>(0.0), TotalAmount = new AtomicReference<Double>(0.0);
+        	bM.getAmount(TotalAmount, remainingAmount, category);
+        	
+        	if(remainingAmount.get() < totalAmount) {
+                showAlert(Alert.AlertType.ERROR, "Exceeding budget", "You are exceeding your budget, to send money update your budget");
+                return;
+        	}
+        }
+        
+        
         try (Connection connection = DatabaseConnection.getConnection()) {
             // Check if recipient exists and get their ID
             PreparedStatement checkRecipient = connection.prepareStatement("SELECT UserID FROM User WHERE Username = ?");
@@ -110,14 +123,14 @@ public class SendMoneyController {
                 double senderBalance = balanceResult.getDouble("AccountBalance");
 
                 // Check if the sender has enough balance
-                if (senderBalance < amount) {
+                if (senderBalance < totalAmount) {
                     showAlert(Alert.AlertType.ERROR, "Insufficient Funds", "You do not have enough balance for this transaction.");
                     return;
                 }
 
                 // Deduct amount from sender's account
                 PreparedStatement deductAmount = connection.prepareStatement("UPDATE User SET AccountBalance = AccountBalance - ? WHERE UserID = ?");
-                deductAmount.setDouble(1, amount);
+                deductAmount.setDouble(1, totalAmount);
                 deductAmount.setInt(2, getCurrentUserID());
                 deductAmount.executeUpdate();
 
@@ -135,9 +148,9 @@ public class SendMoneyController {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Money sent successfully!");
 
                 // Add expense
-                new Expense(amount, category).insertToDataBase();
+                new Expense(totalAmount, category).insertToDataBase();
 
-                BudgetManager.getInstance().budAfterExpense(amount, category);
+                BudgetManager.getInstance().budAfterExpense(totalAmount, category);
                 
                 SessionManager.getInstance().updateBalanceInSession(getCurrentUserID());
 

@@ -35,7 +35,7 @@ public class Budget {
 		userID = UserID;
 	}	
 	public void insertToDataBase() {
-		String insertQuery = "INSERT INTO Budget (Category, RemainingAmount, dateModified, UserID, TotalAmount) VALUES (?, ?, ?, ?,0)";
+		String insertQuery = "INSERT INTO Budget (Category, RemainingAmount, dateModified, UserID, TotalAmount) VALUES (?, ?, ?, ?,?)";
 		
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -44,7 +44,7 @@ public class Budget {
 			preparedStatement.setDouble(2, amount);
 			preparedStatement.setTimestamp(3, Timestamp.valueOf(dateTime));
 			preparedStatement.setInt(4, userID);
-			
+			preparedStatement.setDouble(5, amount);
 			preparedStatement.executeUpdate();
 			
 		} catch (Exception e) {

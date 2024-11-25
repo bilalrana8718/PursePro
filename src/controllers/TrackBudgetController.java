@@ -73,6 +73,30 @@ public class TrackBudgetController {
     	budgetList = budMan.getBudgetList(budgetList);
         budgetTable.setItems(budgetList);     	 	
 	}
+	
+	@FXML
+	private void addBudget(ActionEvent event) {
+		if(categoryField.getValue() == null || preAmountField.isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill in all required fields.");  
+            return;			
+		}
+		
+		budMan.addBudget(Double.parseDouble(preAmountField),Double.parseDouble(preAmountField), categoryField.getValue());
+		
+		budgetList = budMan.getBudgetList(budgetList);
+		budgetTable.setItems(budgetList);
+	}
+	@FXML
+	private void removeBudget(ActionEvent event) {
+		if(categoryField.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", "Please fill Category fields.");  
+            return;			
+		}
+		budMan.removeBudget(categoryField.getValue());
+		
+		budgetList = budMan.getBudgetList(budgetList);
+		budgetTable.setItems(budgetList);
+	}
     @FXML
     public void checkIfNum(KeyEvent event) {
     	amountField.setText(preAmountField);
