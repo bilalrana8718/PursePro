@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <!-- Top Bar -->
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #673AB7; -fx-padding: 10; -fx-alignment: center;">
+            <ImageView fitHeight="30" fitWidth="30" />
+            <Label text="PursePro" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+            <Region fx:id="spacer" HBox.hgrow="ALWAYS" />
+            <ImageView fitHeight="20" fitWidth="20" />
+            <ImageView fitHeight="20" fitWidth="20" />
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <VBox spacing="15" style="-fx-padding: 15;">
+            <!-- Balance Display -->
+            <VBox style="-fx-background-color: #F3F4F6; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <HBox spacing="10" style="-fx-alignment: center-left;">
+                    <Label text="Available Balance" style="-fx-font-size: 14px; -fx-text-fill: #4CAF50;" />
+                    <Button text="Upgrade Account" style="-fx-background-color: #FFC107; -fx-border-radius: 5; -fx-font-size: 10px;" />
+                </HBox>
+                <Label text="Rs. 1,000,000" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #000000;" />
+                <Label text="Last updated 4 minutes ago" style="-fx-font-size: 12px; -fx-text-fill: #9E9E9E;" />
+            </VBox>
+
+            <!-- Main Actions -->
+            <GridPane hgap="15" vgap="15" style="-fx-alignment: center;">
+                <Button text="Send Money" style="-fx-background-color: #FF5722; -fx-text-fill: #FFFFFF; -fx-border-radius: 10; -fx-pref-width: 100px; -fx-pref-height: 60px;" />
+                <Button text="Bill Payment" style="-fx-background-color: #FF5722; -fx-text-fill: #FFFFFF; -fx-border-radius: 10; -fx-pref-width: 100px; -fx-pref-height: 60px;" />
+                <Button text="Mobile Packages" style="-fx-background-color: #FF5722; -fx-text-fill: #FFFFFF; -fx-border-radius: 40; -fx-pref-width: 100px; -fx-pref-height: 60px;" />
+            </GridPane>
+
+            <!-- More Options -->
+            <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10; -fx-padding: 15;">
+                <Label text="More with PursePro" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #000000;" />
+                <FlowPane hgap="10" vgap="10">
+                    <Button text="Easyload" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                    <Button text="Loans" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                    <Button text="Savings" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                    <Button text="Mini App" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                    <Button text="Insurance" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                    <Button text="Donations" style="-fx-background-color: #F1F1F1; -fx-border-radius: 5; -fx-pref-width: 80px;" />
+                </FlowPane>
+            </VBox>
+        </VBox>
+    </center>
+
+    <!-- Bottom Navigation -->
+    <bottom>
+        <HBox spacing="30" style="-fx-background-color: #F8F8F8; -fx-padding: 10; -fx-alignment: center;">
+            <Button text="Home" style="-fx-background-color: transparent; -fx-text-fill: #673AB7; -fx-font-size: 14px;" />
+            <Button text="Cash Points" style="-fx-background-color: transparent; -fx-text-fill: #673AB7; -fx-font-size: 14px;" />
+            <Button text="Promotions" style="-fx-background-color: transparent; -fx-text-fill: #673AB7; -fx-font-size: 14px;" />
+            <Button text="My Account" style="-fx-background-color: transparent; -fx-text-fill: #673AB7; -fx-font-size: 14px;" />
+        </HBox>
+    </bottom>
+</BorderPane>

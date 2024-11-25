@@ -24,6 +24,8 @@
                <Button text="Transactions" onAction="#openTransactions" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #EEEEEE; -fx-font-size: 14px; -fx-font-weight: bold;" />
                <Button text="Payment Requests" onAction="#paymentRequest" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #EEEEEE; -fx-font-size: 14px; -fx-font-weight: bold;" />
                <Button text="Tax Calculator" onAction="#taxPayment" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #EEEEEE; -fx-font-size: 14px; -fx-font-weight: bold;" />
+               <Button text="Convert Currency" onAction="#convertCurrncy" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #EEEEEE; -fx-font-size: 14px; -fx-font-weight: bold;" />
+			   <Button text="Subscriptions" onAction="#subscriptions" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #EEEEEE; -fx-font-size: 14px; -fx-font-weight: bold;" />
                <Button text="Logout" onAction="#logout" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #C73659; -fx-font-size: 14px; -fx-font-weight: bold;" />
             </VBox>
          </children>

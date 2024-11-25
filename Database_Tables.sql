@@ -78,13 +78,16 @@ CREATE TABLE PaymentRequest (
     FOREIGN KEY (RecipientID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE Subscriptions (
     SubscriptionID INT AUTO_INCREMENT PRIMARY KEY,
     SubscriptionName VARCHAR(100) NOT NULL,
     Description VARCHAR(255),
     Price DECIMAL(10, 2) NOT NULL,
-    DurationInDays INT NOT NULL
+    DurationInDays INT NOT NULL,
+    UserID INT NOT NULL, -- New column to reference the User table
+    FOREIGN KEY (UserID) REFERENCES User(UserID) 
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE
 );
 
 CREATE table Incomes(

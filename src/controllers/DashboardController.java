@@ -97,4 +97,12 @@ public class DashboardController {
     private void taxPayment(ActionEvent event) {
     	AppUtils.changeScene(event, "/views/TaxPayment.fxml");
     }
+    @FXML
+    private void convertCurrncy(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/ConvertCurrency.fxml");
+    }
+    @FXML
+    private void subscriptions(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/Subscription.fxml");
+    }
 }
