@@ -50,10 +50,10 @@
                <Button onAction="#FinancialHealth" style="-fx-background-color: #A91D3A; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" text="Financial Health" />
                <Button text="Track Income" onAction="#trackIncome" prefWidth="550.0" style="-fx-background-color: #A91D3A; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
                <Button text="Track Expense" onAction="#trackExpense" prefWidth="550.0" style="-fx-background-color: #0078D7; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
+               <Button text="Virtual Card" onAction="#virtualCard" prefWidth="550.0" style="-fx-background-color: #0078D7; -fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
+            
             </VBox>
-            <Label layoutX="20.0" layoutY="300.0" style="-fx-font-size: 14px;" text="Recent Transactions" textFill="#151515" />
-            <ListView fx:id="transactionList" layoutX="20.0" layoutY="330.0" prefHeight="150.0" prefWidth="550.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #A91D3A; -fx-border-width: 1px;" />
-         </children>
+           </children>
       </AnchorPane>
    </center>
 

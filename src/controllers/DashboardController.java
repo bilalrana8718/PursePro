@@ -23,8 +23,7 @@ public class DashboardController {
     @FXML
     private Label balanceLabel;
 
-    @FXML
-    private ListView<String> transactionList;
+  
 
     @FXML
     public void initialize() {
@@ -36,8 +35,6 @@ public class DashboardController {
         usernameLabel.setText("Username: " + username);
         balanceLabel.setText("Balance: $" + balance);
 
-        // Load recent transactions (placeholder for now)
-        transactionList.getItems().addAll("Transaction 1", "Transaction 2", "Transaction 3");
     }
     
     public void openSendMoney(ActionEvent event) {
@@ -104,5 +101,9 @@ public class DashboardController {
     @FXML
     private void subscriptions(ActionEvent event) {
     	AppUtils.changeScene(event, "/views/Subscription.fxml");
+    }
+    @FXML
+    private void virtualCard(ActionEvent event) {
+    	AppUtils.changeScene(event, "/views/VirtualCard.fxml");
     }
 }

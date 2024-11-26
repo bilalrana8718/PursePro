@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.VirtualCardController">
+    <AnchorPane style="-fx-background-color: #1E1E2C;" prefHeight="600.0" prefWidth="800.0">
+        <!-- Back Button -->
+        <Button text="Back" layoutX="20.0" layoutY="20.0" onAction="#goBackAction"
+                style="-fx-background-color: #C73659; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10px;" />
+        
+        <!-- Page Title -->
+        <Label text="Virtual Card Management" layoutX="100.0" layoutY="20.0"
+               style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+        
+        <!-- Card Status Section -->
+        <VBox layoutX="20.0" layoutY="60.0" spacing="20">
+            <Label fx:id="cardStatusLabel" text="You do not have a virtual card." 
+                   style="-fx-font-size: 16; -fx-text-fill: #C73659;" />
+            <Button fx:id="issueCardButton" text="Issue New Virtual Card" onAction="#issueCardAction"
+                    style="-fx-background-color: #A91D3A; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-background-radius: 10px;" />
+        </VBox>
+
+        <!-- Card Details Section -->
+        <Pane fx:id="cardDetailsPane" layoutX="20.0" layoutY="150.0" prefWidth="760.0" prefHeight="200.0"
+              style="-fx-background-color: #A91D3A; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);" visible="false">
+            
+            <!-- Card Title -->
+            <Label text="VIRTUAL CARD" layoutX="20.0" layoutY="20.0"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+
+            <!-- Card Number -->
+            <Label fx:id="cardNumberLabel" text="XXXX XXXX XXXX XXXX" layoutX="20.0" layoutY="60.0"
+                   style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+
+            <!-- Expiry Date -->
+            <Label fx:id="cardExpiryLabel" text="MM/YYYY" layoutX="20.0" layoutY="110.0" 
+                   style="-fx-font-size: 16; -fx-text-fill: #FFFFFF;" />
+
+            <!-- CVV -->
+            <Label fx:id="cardCVVLabel" text="XXX" layoutX="600.0" layoutY="110.0" 
+                   style="-fx-font-size: 16; -fx-text-fill: #FFFFFF;" />
+
+            <!-- Card Limit -->
+            <Label fx:id="cardLimitLabel" text="0.00" layoutX="20.0" layoutY="140.0" 
+                   style="-fx-font-size: 16; -fx-text-fill: #FFFFFF;" />
+
+            <!-- Block Card Button -->
+            <Button text="Block Card" layoutX="600.0" layoutY="140.0" onAction="#blockCardAction"
+                    style="-fx-background-color: #C73659; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-background-radius: 10px;" />
+        </Pane>
+    </AnchorPane>
+</AnchorPane>
