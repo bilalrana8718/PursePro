@@ -25,6 +25,3 @@ Now go to run configurations and select your java project runner.
 then go into dependencies and add the mysql connector jar file in module paths
 then apply and run
 
-### Updates
-
-Pyayre bhaio mene Budget Table Update kiya hai
